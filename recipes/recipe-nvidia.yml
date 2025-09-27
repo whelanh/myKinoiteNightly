@@ -69,6 +69,10 @@ modules:
         - ublue-os-signing
         - ublue-os-luks
         - ublue-os-just
+        - aurora
+        - ublue-bling
+        - ublue-brew
+        - aurora-readymade-config
 
     #remove:
     #  packages:
