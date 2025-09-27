@@ -25,9 +25,9 @@ This image also includes some custom ujust 'recipes' to install a curated list o
 - `ujust remove-dev-flatpaks` - Remove all development Flatpaks (keeps user data)
 - `ujust list-dev-flatpaks` - Show installation status of all development Flatpaks
 - `ujust install-homebrew` - Install Homebrew (brew)
+- `ujust install-aurora-brew-bundle` - Install Universal Blue's Aurora brew bundle
 
 ### NVIDIA
-
 This image includes a set of packages that should detect your NVIDIA GPU and use the appropriate driver (newer NVIDIA GPUs that can use the nouveau driver).
 
 - `kernel-modules`
