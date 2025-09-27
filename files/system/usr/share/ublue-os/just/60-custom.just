@@ -209,3 +209,49 @@ list-dev-flatpaks:
             fi
         fi
     done
+
+# Install Homebrew package manager (Linuxbrew for Fedora Kinoite)
+install-homebrew:
+    #!/usr/bin/env bash
+    echo "Installing Homebrew (Linuxbrew) on Fedora Kinoite..."
+    
+    # Check if Homebrew is already installed
+    if command -v brew >/dev/null 2>&1; then
+        echo "✓ Homebrew is already installed"
+        brew --version
+        exit 0
+    fi
+    
+    echo "Downloading and running Homebrew installation script..."
+    
+    # Run the official Homebrew installation script
+    if /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; then
+        echo "✓ Homebrew installation completed successfully!"
+        
+        # On Linux, Homebrew installs to /home/linuxbrew/.linuxbrew
+        BREW_PATH="/home/linuxbrew/.linuxbrew/bin"
+        
+        # Add Homebrew to PATH for the current session
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        
+        echo
+        echo "📝 Important: Add Homebrew to your shell profile"
+        echo "Add the following line to your ~/.bashrc:"
+        echo "eval \"\$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\""
+        echo
+        echo "Or run this command to add it automatically:"
+        echo "echo 'eval \"\$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"' >> ~/.bashrc"
+        echo
+        echo "Then restart your terminal or run: source ~/.bashrc"
+        
+        # Verify installation
+        if command -v brew >/dev/null 2>&1; then
+            echo
+            echo "✅ Homebrew is ready to use!"
+            brew --version
+        fi
+    else
+        echo "✗ Homebrew installation failed"
+        echo "Please check the error messages above and try again"
+        exit 1
+    fi
