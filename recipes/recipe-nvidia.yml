@@ -1,0 +1,81 @@
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+# image will be published to ghcr.io/<user>/<name>
+name: kinoite-nightly-ublue
+# description will be included in the image's metadata
+description: Kinoite Nightly Rawhide w/Ublue + NVIDIA Drivers
+
+# the base image to build on top of (FROM) and the version tag to use
+base-image: quay.io/fedora-ostree-desktops/kinoite-nightly
+image-version: rawhide # latest is also supported if you want new updates ASAP
+
+# module configuration, executed in order
+# you can include multiple instances of the same module
+modules:
+  - type: files
+    files:
+      - source: system
+        destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
+
+  - type: rpm-ostree
+    install:
+      - kernel-modules
+      - kernel-modules-extra
+      - linux-firmware
+      - mesa-dri-drivers
+      - xorg-x11-drv-nouveau
+      - libdrm
+
+  - type: dnf
+    repos:
+      copr:
+        - atim/starship
+        - ublue-os/packages # ublue-os maintained packages
+    install:
+      packages:
+        - dnf-plugins-core # needed for copr
+        - micro
+        - starship
+        - zsh
+        - gcc
+        - gcc-c++
+        - gcc-gfortran
+        - make
+        - fastfetch
+        - htop
+        - duf
+        - cmake
+        - git
+        - fuse
+        - edk2-ovmf
+        - libvirt
+        - libvirt-nss
+        - docker
+        - distrobox
+        - podman-compose
+        - podman-machine
+        - qemu-char-spice
+        - qemu-device-display-virtio-gpu
+        - qemu-device-display-virtio-vga
+        - qemu-device-usb-redirect
+        - qemu-img
+        - qemu-system-x86-core
+        - qemu-user-binfmt
+        - qemu-user-static
+        - qemu
+        - virt-manager
+        - tailscale
+        - ublue-os-libvirt-workarounds
+        - ublue-os-update-services
+        - ublue-os-signing
+        - ublue-os-luks
+        - ublue-os-just
+
+    #remove:
+    #  packages:
+        # example: removing firefox (in favor of the flatpak)
+        # "firefox" is the main package, "firefox-langpacks" is a dependency
+        #- firefox
+        #- firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
+
+  
+  - type: signing # this sets up the proper policy & signing files for signed images to work fully
