@@ -24,6 +24,7 @@ This image also includes some custom ujust 'recipes' to install a curated list o
 - `ujust install-dev-flatpaks` - Manually install all development Flatpaks
 - `ujust remove-dev-flatpaks` - Remove all development Flatpaks (keeps user data)
 - `ujust list-dev-flatpaks` - Show installation status of all development Flatpaks
+- `ujust install-homebrew` - Install Homebrew (brew)
 
 ### NVIDIA
 
