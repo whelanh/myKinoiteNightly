@@ -44,6 +44,7 @@ modules:
         - htop
         - duf
         - cmake
+        - cairo
         - git
         - fuse
         - edk2-ovmf
