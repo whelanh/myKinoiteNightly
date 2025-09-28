@@ -256,45 +256,45 @@ install-homebrew:
         exit 1
     fi
 
-    # Install Aurora CLI tools via Homebrew bundle
-    install-aurora-brew-bundle:
-        #!/usr/bin/env bash
-        echo "Installing Aurora CLI tools via Homebrew bundle..."
-        
-        # Check if Homebrew is available
-        if ! command -v brew >/dev/null 2>&1; then
-            echo "✗ Homebrew is not installed or not in PATH"
-            echo "Please install Homebrew first by running:"
-            echo "  ujust install-homebrew"
-            echo
-            echo "Then restart your terminal or run: source ~/.bashrc"
-            exit 1
-        fi
-        
-        echo "✓ Homebrew found: $(brew --version | head -n1)"
+# Install Aurora CLI tools via Homebrew bundle
+install-aurora-brew-bundle:
+    #!/usr/bin/env bash
+    echo "Installing Aurora CLI tools via Homebrew bundle..."
+    
+    # Check if Homebrew is available
+    if ! command -v brew >/dev/null 2>&1; then
+        echo "✗ Homebrew is not installed or not in PATH"
+        echo "Please install Homebrew first by running:"
+        echo "  ujust install-homebrew"
         echo
+        echo "Then restart your terminal or run: source ~/.bashrc"
+        exit 1
+    fi
         
-        # Check if the Brewfile exists
-        BREWFILE="/usr/share/ublue-os/homebrew/aurora-cli.Brewfile"
-        if [[ ! -f "$BREWFILE" ]]; then
-            echo "✗ Aurora CLI Brewfile not found at: $BREWFILE"
-            echo "This file should be provided by your Aurora system image."
-            exit 1
-        fi
+    echo "✓ Homebrew found: $(brew --version | head -n1)"
+    echo
         
-        echo "✓ Found Aurora CLI Brewfile: $BREWFILE"
-        echo "Installing packages from Aurora CLI bundle..."
+    # Check if the Brewfile exists
+    BREWFILE="/usr/share/ublue-os/homebrew/aurora-cli.Brewfile"
+    if [[ ! -f "$BREWFILE" ]]; then
+        echo "✗ Aurora CLI Brewfile not found at: $BREWFILE"
+        echo "This file should be provided by your Aurora system image."
+        exit 1
+    fi
+        
+    echo "✓ Found Aurora CLI Brewfile: $BREWFILE"
+    echo "Installing packages from Aurora CLI bundle..."
+    echo
+        
+    # Run brew bundle with the Aurora CLI Brewfile
+    if brew bundle --file "$BREWFILE"; then
         echo
-        
-        # Run brew bundle with the Aurora CLI Brewfile
-        if brew bundle --file "$BREWFILE"; then
-            echo
-            echo "✅ Aurora CLI tools installed successfully!"
-            echo "All tools from the Aurora CLI bundle are now available."
-        else
-            echo
-            echo "✗ Failed to install some packages from Aurora CLI bundle"
-            echo "Check the error messages above for details"
-            exit 1
-        fi
+        echo "✅ Aurora CLI tools installed successfully!"
+        echo "All tools from the Aurora CLI bundle are now available."
+    else
+        echo
+        echo "✗ Failed to install some packages from Aurora CLI bundle"
+        echo "Check the error messages above for details"
+        exit 1
+    fi
     
