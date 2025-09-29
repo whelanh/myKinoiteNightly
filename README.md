@@ -80,4 +80,4 @@ cosign verify --key cosign.pub ghcr.io/whelanh/myKinoite-amd:latest
 
 ## Gratitude
 
-I sincerely appreciate all of the hard work by **BlueBuild**, **Fedora** and **Universal Blue** that made this image possible. In particular, to **Universal Blue** for making a number of their packages available on the COPR repository.
+I sincerely appreciate all of the hard work by **BlueBuild**, **Fedora**, **Universal Blue** and solopasha for his COPR KDE Git repos that made this image possible. In particular, to **Universal Blue** for making a number of their packages available on the COPR repository.
