@@ -51,6 +51,137 @@ io.github.dvlv.boxbuddyrs|manage distroboxes
 com.dropbox.Client| Dropbox
 '''
 
+# Install Aurora CLI tools via Homebrew bundle
+install-aurora-brew-bundle:
+    #!/usr/bin/env bash
+    echo "Installing Aurora CLI tools via Homebrew bundle..."
+    
+    # Check if Homebrew is available
+    if ! command -v brew >/dev/null 2>&1; then
+        echo "✗ Homebrew is not installed or not in PATH"
+        echo "Please install Homebrew first by running:"
+        echo "  ujust install-homebrew"
+        echo
+        echo "Then restart your terminal or run: source ~/.bashrc"
+        exit 1
+    fi
+    
+    echo "✓ Homebrew found: $(brew --version | head -n1)"
+    echo
+    
+    # Check if the Brewfile exists
+    BREWFILE="/usr/share/ublue-os/homebrew/aurora-cli.Brewfile"
+    if [[ ! -f "$BREWFILE" ]]; then
+        echo "✗ Aurora CLI Brewfile not found at: $BREWFILE"
+        echo "This file should be provided by your Aurora system image."
+        exit 1
+    fi
+    
+    echo "✓ Found Aurora CLI Brewfile: $BREWFILE"
+    echo "Installing packages from Aurora CLI bundle..."
+    echo
+    
+        # Run brew bundle with the Aurora CLI Brewfile
+    if brew bundle --file "$BREWFILE"; then
+        echo
+        echo "✅ Aurora CLI tools installed successfully!"
+        echo "All tools from the Aurora CLI bundle are now available."
+    else
+        echo
+        echo "✗ Failed to install some packages from Aurora CLI bundle"
+        echo "Check the error messages above for details"
+        exit 1
+    fi
+
+# Install Aurora fonts via Homebrew bundle
+install-fonts:
+    #!/usr/bin/env bash
+    echo "Installing Aurora fonts via Homebrew bundle..."
+    
+    # Check if Homebrew is available
+    if ! command -v brew >/dev/null 2>&1; then
+        echo "✗ Homebrew is not installed or not in PATH"
+        echo "Please install Homebrew first by running:"
+        echo "  ujust install-homebrew"
+        echo
+        echo "Then restart your terminal or run: source ~/.bashrc"
+        exit 1
+    fi
+        
+    echo "✓ Homebrew found: $(brew --version | head -n1)"
+    echo
+        
+    # Check if the Brewfile exists
+    BREWFILE="/usr/share/ublue-os/homebrew/aurora-fonts.Brewfile"
+    if [[ ! -f "$BREWFILE" ]]; then
+        echo "✗ Aurora fonts Brewfile not found at: $BREWFILE"
+        echo "This file should be provided by your Aurora system image."
+        exit 1
+    fi
+        
+    echo "✓ Found Aurora fonts Brewfile: $BREWFILE"
+    echo "Installing fonts from Aurora fonts bundle..."
+    echo
+        
+    # Run brew bundle with the Aurora fonts Brewfile
+    if brew bundle --file "$BREWFILE"; then
+        echo
+        echo "✅ Aurora fonts installed successfully!"
+        echo "All fonts from the Aurora fonts bundle are now available."
+    else
+        echo
+        echo "✗ Failed to install some fonts from Aurora fonts bundle"
+        echo "Check the error messages above for details"
+        exit 1
+    fi
+
+# Install Homebrew package manager (Linuxbrew for Fedora Kinoite)
+install-homebrew:
+    #!/usr/bin/env bash
+    echo "Installing Homebrew (Linuxbrew) on Fedora Kinoite..."
+    
+    # Check if Homebrew is already installed
+    if command -v brew >/dev/null 2>&1; then
+        echo "✓ Homebrew is already installed"
+        brew --version
+        exit 0
+    fi
+    
+    echo "Downloading and running Homebrew installation script..."
+    echo "This may take a few minutes and will require your password..."
+    
+    # Run the official Homebrew installation script
+    if /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; then
+        echo "✓ Homebrew installation completed successfully!"
+        
+        # On Linux, Homebrew installs to /home/linuxbrew/.linuxbrew
+        BREW_PATH="/home/linuxbrew/.linuxbrew/bin"
+        
+        # Add Homebrew to PATH for the current session
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        
+        echo
+        echo "📝 Important: Add Homebrew to your shell profile"
+        echo "Add the following line to your ~/.bashrc:"
+        echo "eval \"\$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\""
+        echo
+        echo "Or run this command to add it automatically:"
+        echo "echo 'eval \"\$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"' >> ~/.bashrc"
+        echo
+        echo "Then restart your terminal or run: source ~/.bashrc"
+        
+        # Verify installation
+        if command -v brew >/dev/null 2>&1; then
+            echo
+            echo "✅ Homebrew is ready to use on Fedora Kinoite!"
+            brew --version
+        fi
+    else
+        echo "✗ Homebrew installation failed"
+        echo "Please check the error messages above and try again"
+        exit 1
+    fi
+
 # Install development and productivity Flatpaks
 install-dev-flatpaks:
     #!/usr/bin/env bash
@@ -208,93 +339,44 @@ list-dev-flatpaks:
                 echo "  ✗ $flatpak - ${DESCRIPTIONS[$flatpak]} (not installed)"
             fi
         fi
-    done
+    done  
 
-# Install Homebrew package manager (Linuxbrew for Fedora Kinoite)
-install-homebrew:
+# Add current user to developer groups (docker, incus-admin, libvirt, dialout)
+add-user-to-dx-group:
     #!/usr/bin/env bash
-    echo "Installing Homebrew (Linuxbrew) on Fedora Kinoite..."
+    echo "Adding current user to developer groups..."
     
-    # Check if Homebrew is already installed
-    if command -v brew >/dev/null 2>&1; then
-        echo "✓ Homebrew is already installed"
-        brew --version
-        exit 0
-    fi
+    # Define the groups to add
+    GROUPS=("docker" "incus-admin" "libvirt" "dialout")
     
-    echo "Downloading and running Homebrew installation script..."
+    # Get current username
+    CURRENT_USER=$(whoami)
     
-    # Run the official Homebrew installation script
-    if /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; then
-        echo "✓ Homebrew installation completed successfully!"
-        
-        # On Linux, Homebrew installs to /home/linuxbrew/.linuxbrew
-        BREW_PATH="/home/linuxbrew/.linuxbrew/bin"
-        
-        # Add Homebrew to PATH for the current session
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        
-        echo
-        echo "📝 Important: Add Homebrew to your shell profile"
-        echo "Add the following line to your ~/.bashrc:"
-        echo "eval \"\$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\""
-        echo
-        echo "Or run this command to add it automatically:"
-        echo "echo 'eval \"\$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"' >> ~/.bashrc"
-        echo
-        echo "Then restart your terminal or run: source ~/.bashrc"
-        
-        # Verify installation
-        if command -v brew >/dev/null 2>&1; then
-            echo
-            echo "✅ Homebrew is ready to use!"
-            brew --version
+    echo "User: $CURRENT_USER"
+    echo
+    
+    # Create groups if they don't exist and add user to them
+    for group in "${GROUPS[@]}"; do
+        # Check if group exists, create if it doesn't
+        if ! getent group "$group" >/dev/null 2>&1; then
+            echo "Creating group: $group"
+            sudo groupadd "$group"
+        else
+            echo "✓ Group '$group' already exists"
         fi
-    else
-        echo "✗ Homebrew installation failed"
-        echo "Please check the error messages above and try again"
-        exit 1
-    fi
-
-# Install Aurora CLI tools via Homebrew bundle
-install-aurora-brew-bundle:
-    #!/usr/bin/env bash
-    echo "Installing Aurora CLI tools via Homebrew bundle..."
+        
+        # Check if user is already in the group
+        if id -nG "$CURRENT_USER" | grep -qw "$group"; then
+            echo "✓ User '$CURRENT_USER' is already in group '$group'"
+        else
+            echo "Adding user '$CURRENT_USER' to group '$group'"
+            sudo usermod -aG "$group" "$CURRENT_USER"
+            echo "✓ Successfully added user to group '$group'"
+        fi
+        echo
+    done
     
-    # Check if Homebrew is available
-    if ! command -v brew >/dev/null 2>&1; then
-        echo "✗ Homebrew is not installed or not in PATH"
-        echo "Please install Homebrew first by running:"
-        echo "  ujust install-homebrew"
-        echo
-        echo "Then restart your terminal or run: source ~/.bashrc"
-        exit 1
-    fi
-        
-    echo "✓ Homebrew found: $(brew --version | head -n1)"
+    echo "✅ User group configuration complete!"
     echo
-        
-    # Check if the Brewfile exists
-    BREWFILE="/usr/share/ublue-os/homebrew/aurora-cli.Brewfile"
-    if [[ ! -f "$BREWFILE" ]]; then
-        echo "✗ Aurora CLI Brewfile not found at: $BREWFILE"
-        echo "This file should be provided by your Aurora system image."
-        exit 1
-    fi
-        
-    echo "✓ Found Aurora CLI Brewfile: $BREWFILE"
-    echo "Installing packages from Aurora CLI bundle..."
-    echo
-        
-    # Run brew bundle with the Aurora CLI Brewfile
-    if brew bundle --file "$BREWFILE"; then
-        echo
-        echo "✅ Aurora CLI tools installed successfully!"
-        echo "All tools from the Aurora CLI bundle are now available."
-    else
-        echo
-        echo "✗ Failed to install some packages from Aurora CLI bundle"
-        echo "Check the error messages above for details"
-        exit 1
-    fi
-    
+    echo "📝 Important: You need to log out and log back in for group changes to take effect."
+    echo "   Or run: newgrp docker (and repeat for each group)"
