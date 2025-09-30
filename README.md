@@ -39,7 +39,7 @@ This image includes a set of packages that should detect your NVIDIA GPU and use
 - `xorg-x11-drv-nouveau`
 - `libdrm` 
 
-## Installation
+## 🛠️ Installation
 
 > [!WARNING]  
 > [This is an experimental feature](https://www.fedoraproject.org/wiki/Changes/OstreeNativeContainerStable), try at your own discretion.
