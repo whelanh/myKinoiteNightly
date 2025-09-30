@@ -5,14 +5,14 @@
 
 See the [BlueBuild docs](https://blue-build.org/how-to/setup/) for quick setup instructions for setting up your own repository based on this template.
 
-## My Custom Image
+## 💽 My Custom Image
 
 This repository builds a custom **Fedora Kinoite image based on the nightly rawhide build**:
 
    
       Image base:quay.io/fedora-ostree-desktops/kinoite-nightly:rawhide
    
-## Changes
+## ⏭️ Changes
 
 The nightly Kinoite build images use the COPR solopasha git repos for the latest in-development KDE and KDE-gear packages. *See https://tim.siosm.fr/blog/2023/01/20/introducing-kinoite-nightly-beta/ for further details.* This custom image also incorporates a number of Universal Blue packages in order to provide some of the features of a UBlue "dx" experience.  See `/recipes/recipe-nvidia.yml` file for details on what I've added.
 
