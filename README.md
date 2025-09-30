@@ -26,6 +26,8 @@ This image also includes some custom ujust 'recipes' to install homebrew, Univer
 - `ujust list-dev-flatpaks` - Show installation status of all development Flatpaks
 - `ujust install-homebrew` - Install Homebrew (brew)
 - `ujust install-aurora-brew-bundle` - Install Universal Blue's Aurora brew bundle
+- `ujust install-fonts` - Install additional fonts (from Aurora)
+- `ujust add-user-to-dx-group` - Add user to additional dev groups (from Aurora)
 
 ### NVIDIA
 This image includes a set of packages that should detect your NVIDIA GPU and use the appropriate driver (newer NVIDIA GPUs that can use the nouveau driver).
