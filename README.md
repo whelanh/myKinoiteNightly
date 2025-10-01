@@ -1,4 +1,4 @@
-<img width="194" height="210" alt="cbcd91ade598d3c94aaf15b264d952db4f590a9a" src="https://github.com/user-attachments/assets/e2f65348-9399-43a4-802f-8bf82e04a55b" />
+I<img width="194" height="210" alt="cbcd91ade598d3c94aaf15b264d952db4f590a9a" src="https://github.com/user-attachments/assets/e2f65348-9399-43a4-802f-8bf82e04a55b" />
 
 # myKinoiteNightly &nbsp; [![bluebuild build badge](https://github.com/whelanh/myKinoiteNightly/actions/workflows/build.yml/badge.svg)](https://github.com/whelanh/myKinoiteNightly/actions/workflows/build.yml)
 ## *The leading edge of Fedora and KDE...with the safe rollback option built into Kinoite.*
@@ -66,7 +66,7 @@ To rebase an existing atomic Fedora installation to the latest build:
   systemctl reboot
   ```
 
-The `latest` tag will automatically point to the latest build. That build will still always use the Fedora version specified in `recipe.yml` (which is the nightly kinoite:rawhide).
+The `latest` tag will automatically point to the latest build. That build will still always use the Fedora version specified in `recipe.yml` (which is the nightly kinoite:rawhide image).
 
 ## ISO
 
@@ -82,4 +82,4 @@ cosign verify --key cosign.pub ghcr.io/whelanh/myKinoite-amd:latest
 
 ## 🙏 Gratitude
 
-I sincerely appreciate all of the hard work by **BlueBuild**, **Fedora**, **Universal Blue** and solopasha for his COPR KDE Git repos that made this image possible. In particular, to **Universal Blue** for making a number of their packages available on the COPR repository.
+I sincerely appreciate all of the hard work by **BlueBuild**, **Fedora**, **Universal Blue** and solopasha for providing COPR KDE Git repos that make this image possible. In particular, I thank **Universal Blue** for their packages available on the COPR repository.
