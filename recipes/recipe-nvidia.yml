@@ -70,10 +70,6 @@ modules:
         - ublue-brew
         - aurora-readymade-config
 
-  - type: script
-    scripts:
-      - install-insync.sh
-
   - type: files
     files:
       - source: system
