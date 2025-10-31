@@ -50,6 +50,7 @@ org.openrgb.OpenRGB|manage system LEDs etc.
 org.remmina.Remmina|Remote desktop app
 io.github.dvlv.boxbuddyrs|manage distroboxes
 com.dropbox.Client| Dropbox
+org.mozilla.firefox| Firefox
 '''
 
 # Install Aurora CLI tools via Homebrew bundle
