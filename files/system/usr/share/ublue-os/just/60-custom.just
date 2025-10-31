@@ -24,6 +24,7 @@ org.openrgb.OpenRGB
 org.remmina.Remmina
 io.github.dvlv.boxbuddyrs
 com.dropbox.Client
+org.mozilla.firefox
 '''
 
 # Application descriptions - defined once and used by all recipes
