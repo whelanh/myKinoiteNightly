@@ -37,6 +37,7 @@ modules:
         - make
         - fastfetch
         - htop
+        - kmymoney
         - duf
         - cmake
         - cairo
