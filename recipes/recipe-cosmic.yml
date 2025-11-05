@@ -19,14 +19,14 @@ modules:
       - mesa-dri-drivers
       - xorg-x11-drv-nouveau
       - libdrm
-      - '@cosmic-desktop'
-      - '@cosmic-desktop-apps'
+
 
   - type: dnf
     repos:
       copr:
         - atim/starship
         - ublue-os/packages # ublue-os maintained packages
+        - ryanabx/cosmic-epoch # COSMIC desktop environment
     install:
       packages:
         - dnf-plugins-core # needed for copr
@@ -42,6 +42,7 @@ modules:
         - duf
         - cmake
         - cairo
+        - cosmic-desktop
         - git
         - fuse
         - fprintd  # For Thinkpad fingerprint reader
