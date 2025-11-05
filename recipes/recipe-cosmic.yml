@@ -42,6 +42,8 @@ modules:
         - cairo
         - git
         - fuse
+        - fprintd  # For Thinkpad fingerprint reader
+        - fprintd-pam
         - edk2-ovmf
         - libvirt
         - libvirt-nss
