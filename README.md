@@ -10,8 +10,14 @@
 This repository builds a custom **Fedora Kinoite image based on the nightly rawhide build**:
 
    
-      Image base:quay.io/fedora-ostree-desktops/kinoite-nightly:rawhide
-   
+      Image base:    quay.io/fedora-ostree-desktops/kinoite-nightly:rawhide
+
+For those interested in the Cosmic Desktop, I've also added a recipe for **Fedora Cosmic Atomic: rawhide**:
+
+      Image base:    quay.io/fedora-ostree-desktops/cosmic-atomic:rawhide
+      
+The Cosmic recipe is otherwise identical to the Kinoite recipe in terms of added packages, Ublue features, etc.
+
 ## ⏭️ Changes
 
 The nightly Kinoite build images use the COPR solopasha git repos for the latest in-development KDE and KDE-gear packages. *See https://tim.siosm.fr/blog/2023/01/20/introducing-kinoite-nightly-beta/ for further details.* A number of Universal Blue packages are included in order to provide some of the features of a UBlue "dx" experience.  See [/recipes/recipe-nvidia.yml](https://github.com/whelanh/myKinoiteNightly/blob/main/recipes/recipe-nvidia.yml) file for details on what I've added.
@@ -50,6 +56,11 @@ To rebase an existing atomic Fedora installation to the latest build:
   ```
   rpm-ostree rebase ostree-unverified-registry:ghcr.io/whelanh/kinoite-nightly-ublue:latest
   ```
+  or for Cosmic:
+    ```
+  rpm-ostree rebase ostree-unverified-registry:ghcr.io/whelanh/cosmic-latest-ublue:latest
+  ```
+  
 - Reboot to complete the rebase:
   ```
   systemctl reboot
@@ -58,6 +69,8 @@ To rebase an existing atomic Fedora installation to the latest build:
   ```
   rpm-ostree rebase ostree-image-signed:docker://ghcr.io/whelanh/kinoite-nightly-ublue:latest
   ```
+or for Cosmic, switch the image to ```cosmic-latest-ublue:latest```
+
 - Reboot again to complete the installation
   ```
   systemctl reboot
