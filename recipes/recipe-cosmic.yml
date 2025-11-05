@@ -19,7 +19,8 @@ modules:
       - mesa-dri-drivers
       - xorg-x11-drv-nouveau
       - libdrm
-      - '@cosmic-desktop-environment'
+      - '@cosmic-desktop'
+      - '@cosmic-desktop-apps'
 
   - type: dnf
     repos:
