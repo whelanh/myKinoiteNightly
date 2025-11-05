@@ -42,7 +42,6 @@ modules:
         - cairo
         - git
         - fuse
-        - @cosmic-desktop-environment
         - fprintd  # For Thinkpad fingerprint reader
         - fprintd-pam
         - edk2-ovmf
@@ -77,7 +76,11 @@ modules:
         # Removing firefox (in favor of the flatpak)
         # "firefox" is the main package, "firefox-langpacks" is a dependency
         - firefox
-        #- firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)        
+        #- firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)  
+
+  - type: dnf
+    groups:
+      - cosmic-desktop-environment    
 
   - type: files
     files:
