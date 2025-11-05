@@ -25,6 +25,7 @@ modules:
       copr:
         - atim/starship
         - ublue-os/packages # ublue-os maintained packages
+        - ryanabx/cosmic-epoch # COSMIC desktop environment
     install:
       packages:
         - dnf-plugins-core # needed for copr
@@ -40,8 +41,11 @@ modules:
         - duf
         - cmake
         - cairo
+        - cosmic-desktop
         - git
         - fuse
+        - fprintd  # For Thinkpad fingerprint reader
+        - fprintd-pam
         - edk2-ovmf
         - libvirt
         - libvirt-nss
