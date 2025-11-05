@@ -5,7 +5,7 @@ name: cosmic-latest-ublue
 description: Cosmic w/Ublue + NVIDIA Drivers
 
 # the base image to build on top of (FROM) and the version tag to use
-base-image: quay.io/fedora-ostree-desktops/cosmic-atomic
+base-image: quay.io/fedora-ostree-desktops/kinoite-nightly
 image-version: rawhide # use specific version tag (41, 42, 43, or rawhide)
 
 # module configuration, executed in order
@@ -42,6 +42,7 @@ modules:
         - cairo
         - git
         - fuse
+        - @cosmic-desktop-environment
         - fprintd  # For Thinkpad fingerprint reader
         - fprintd-pam
         - edk2-ovmf
