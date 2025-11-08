@@ -104,7 +104,7 @@ nix-shell '<home-manager>' -A install
 **Rebuild the configuration**
 
 ```
-git clone https://github.com/DXC-0/Nix-Dotfiles.git
+git clone https://github.com/DXC-0/Nix-Dotfiles.git [MORE LOGICALLY, YOUR OWN FORK OF THIS REPO]
 cd Nix-Dotfiles
 mkdir -p $HOME/.config/home-manager
 mv * $HOME/.config/home-manager
