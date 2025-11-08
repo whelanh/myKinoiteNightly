@@ -21,6 +21,8 @@ Some custom ujust 'recipes' are provided to install homebrew, Universal Blue's A
 
 For those interested in the Cosmic desktop as an alternative login option, I've also added ryanbex/cosmic-epoch COPR repo and `cosmic-desktop` to the installed package list.
 
+Also, if interested in Nix, I've copied instructions on how to install Nix from https://github.com/DXC-0/Nix-Dotfiles.
+
 ### Additional available ujust commands
 
 - `ujust auto-setup-flatpaks` - Automatically install all development Flatpaks on first log in (*This is disabled currently*)
