@@ -384,3 +384,86 @@ add-user-to-dx-group:
     echo
     echo "📝 Important: You need to log out and log back in for group changes to take effect."
     echo "   Or run: newgrp docker (and repeat for each group)"
+
+# Prepare system for Nix installation (requires reboot)
+nix-prep:
+    #!/usr/bin/env bash
+    echo "Preparing system for Nix installation..."
+    echo "This will configure composefs and transient root, then reboot."
+    echo
+    
+    # Create the prepare-root.conf
+    sudo tee /etc/ostree/prepare-root.conf <<'EOL'
+[composefs]
+enabled = yes
+[root]
+transient = true
+EOL
+    
+    echo "✓ Created /etc/ostree/prepare-root.conf"
+    echo
+    echo "⚠️  System will now configure initramfs and REBOOT"
+    echo "After reboot, run: ujust install-nix"
+    echo
+    
+    # Track the config and reboot
+    rpm-ostree initramfs-etc --reboot --track=/etc/ostree/prepare-root.conf
+
+# Install Nix package manager with ostree support
+install-nix:
+    #!/usr/bin/env bash
+    echo "Installing Nix with ostree support..."
+    
+    # Check if Nix is already installed
+    if command -v nix >/dev/null 2>&1; then
+        echo "✓ Nix is already installed"
+        nix --version
+        exit 0
+    fi
+    
+    echo "Downloading and running Determinate Nix installer..."
+    echo "This may take a few minutes..."
+    echo
+    
+    # Install Nix with ostree support
+    if curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | \
+        sh -s -- install ostree --no-confirm --persistence=/var/lib/nix; then
+        echo
+        echo "✓ Nix installation completed successfully!"
+        
+        # Source Nix for current session
+        if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+            . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+        fi
+        
+        echo
+        echo "Adding nixpkgs unstable channel..."
+        if nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs && \
+           nix-channel --update; then
+            echo "✓ Added nixpkgs unstable channel"
+        else
+            echo "✗ Failed to add nixpkgs unstable channel"
+            exit 1
+        fi
+        
+        echo
+        echo "Installing Home-Manager..."
+        if nix-shell '<home-manager>' -A install; then
+            echo
+            echo "✅ Nix and Home-Manager installed successfully!"
+            echo
+            echo "📝 Nix is now ready to use!"
+            echo "   Try: nix-shell -p hello"
+        else
+            echo
+            echo "✗ Failed to install Home-Manager"
+            echo "You can try installing it manually later with:"
+            echo "  nix-shell '<home-manager>' -A install"
+            exit 1
+        fi
+    else
+        echo
+        echo "✗ Nix installation failed"
+        echo "Please check the error messages above and try again"
+        exit 1
+    fi

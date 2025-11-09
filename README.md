@@ -21,7 +21,7 @@ Some custom ujust 'recipes' are provided to install homebrew, Universal Blue's A
 
 For those interested in the Cosmic desktop as an alternative login option, I've also added ryanbex/cosmic-epoch COPR repo and `cosmic-desktop` to the installed package list.
 
-Also, if interested in Nix, I've copied instructions on how to install Nix from https://github.com/DXC-0/Nix-Dotfiles.
+Also, if interested in Nix, automated ujust commands are available to simplify the installation process.
 
 ### Additional available ujust commands
 
@@ -33,6 +33,8 @@ Also, if interested in Nix, I've copied instructions on how to install Nix from 
 - `ujust install-aurora-brew-bundle` - Install Universal Blue's Aurora brew bundle
 - `ujust install-fonts` - Install additional fonts (from Aurora)
 - `ujust add-user-to-dx-group` - Add user to additional dev groups (from Aurora)
+- `ujust nix-prep` - Prepare system for Nix installation (requires reboot)
+- `ujust install-nix` - Install Nix with ostree support, nixpkgs unstable channel, and Home-Manager (run after `nix-prep` reboot)
 
 ### NVIDIA
 This image includes a set of packages that should detect your NVIDIA GPU and use the appropriate driver (newer NVIDIA GPUs that can use the nouveau driver).
@@ -72,9 +74,25 @@ To rebase an existing atomic Fedora installation to the latest build:
 
 The `latest` tag will automatically point to the latest build. That build will still always use the Fedora version specified in `recipe.yml` (which is the nightly kinoite:rawhide image).
 
-## Nix Install (following copied from https://github.com/DXC-0/Nix-Dotfiles)
-**Preparation**
+## Nix Install
+
+To install Nix with ostree support, nixpkgs unstable channel, and Home-Manager, use the provided ujust commands:
+
+```bash
+ujust nix-prep
+# System will reboot automatically
+ujust install-nix
 ```
+
+The `nix-prep` command prepares your system by configuring composefs and transient root, then automatically reboots. After the reboot, `install-nix` installs Nix with ostree support and sets up Home-Manager.
+
+<details>
+<summary>Manual Installation Instructions (if preferred)</summary>
+
+These steps are automated by the ujust commands above, but can be run manually if needed (following instructions from https://github.com/DXC-0/Nix-Dotfiles):
+
+**Preparation**
+```bash
 sudo tee /etc/ostree/prepare-root.conf <<'EOL'
 [composefs]
 enabled = yes
@@ -85,25 +103,25 @@ EOL
 rpm-ostree initramfs-etc --reboot --track=/etc/ostree/prepare-root.conf
 ```
 **Install Nix**
-```
+```bash
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | \
     sh -s -- install ostree --no-confirm --persistence=/var/lib/nix
 ```
 **Add Nix Unstable**
-```
+```bash
 nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
 nix-channel --update
 ```
 **Install Home-Manager**
-
-```nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+```bash
 nix-channel --update
-
 nix-shell '<home-manager>' -A install
 ```
-**Rebuild the configuration**
+</details>
 
-```
+**Configure Home-Manager** (optional)
+
+```bash
 git clone https://github.com/DXC-0/Nix-Dotfiles.git [MORE LOGICALLY, YOUR OWN FORK OF THIS REPO]
 cd Nix-Dotfiles
 mkdir -p $HOME/.config/home-manager
