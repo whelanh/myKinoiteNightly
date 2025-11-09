@@ -25,6 +25,7 @@ org.remmina.Remmina
 io.github.dvlv.boxbuddyrs
 com.dropbox.Client
 org.mozilla.firefox
+it.mijorus.gearlever
 '''
 
 # Application descriptions - defined once and used by all recipes
@@ -51,6 +52,7 @@ org.remmina.Remmina|Remote desktop app
 io.github.dvlv.boxbuddyrs|manage distroboxes
 com.dropbox.Client| Dropbox
 org.mozilla.firefox| Firefox
+it.mijorus.gearlever| For managing AppImages
 '''
 
 # Install Aurora CLI tools via Homebrew bundle
