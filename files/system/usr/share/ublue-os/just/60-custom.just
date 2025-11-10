@@ -393,12 +393,12 @@ nix-prep:
     echo
     
     # Create the prepare-root.conf
-    sudo tee /etc/ostree/prepare-root.conf <<'EOL'
-[composefs]
-enabled = yes
-[root]
-transient = true
-EOL
+    sudo tee /etc/ostree/prepare-root.conf > /dev/null <<'EOL'
+    [composefs]
+    enabled = yes
+    [root]
+    transient = true
+    EOL
     
     echo "✓ Created /etc/ostree/prepare-root.conf"
     echo
