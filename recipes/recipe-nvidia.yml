@@ -26,6 +26,7 @@ modules:
         - atim/starship
         - ublue-os/packages # ublue-os maintained packages
         - ryanabx/cosmic-epoch # COSMIC desktop environment
+        - embeddedsmithd/python-validity # Synaptics fingerprint reader support
     install:
       packages:
         - dnf-plugins-core # needed for copr
@@ -44,8 +45,7 @@ modules:
         - cosmic-desktop
         - git
         - fuse
-        - fprintd  # For Thinkpad fingerprint reader
-        - fprintd-pam
+        - python3-validity  # For Synaptics Thinkpad fingerprint reader
         - edk2-ovmf
         - libvirt
         - libvirt-nss
@@ -78,7 +78,10 @@ modules:
         # Removing firefox (in favor of the flatpak)
         # "firefox" is the main package, "firefox-langpacks" is a dependency
         - firefox
-        #- firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)        
+        #- firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
+        # Removing fprintd in favor of python3-validity
+        - fprintd
+        - fprintd-pam
 
   - type: files
     files:
