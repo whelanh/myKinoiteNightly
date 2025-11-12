@@ -35,6 +35,8 @@ Also, if interested in Nix, automated ujust commands are available to simplify t
 - `ujust add-user-to-dx-group` - Add user to additional dev groups (from Aurora)
 - `ujust nix-prep` - Prepare system for Nix installation (requires reboot)
 - `ujust install-nix` - Install Nix with ostree support, nixpkgs unstable channel, and Home-Manager (run after `nix-prep` reboot)
+- `ujust uninstall-nix` - Remove all Nix packages and uninstall Nix completely
+- `ujust undo-nix-prep` - Undo nix-prep configuration and restore system to pre-Nix state (requires reboot)
 
 ### NVIDIA
 This image includes a set of packages that should detect your NVIDIA GPU and use the appropriate driver (newer NVIDIA GPUs that can use the nouveau driver).
@@ -85,6 +87,19 @@ ujust install-nix
 ```
 
 The `nix-prep` command prepares your system by configuring composefs and transient root, then automatically reboots. After the reboot, `install-nix` installs Nix with ostree support and sets up Home-Manager.
+
+### Uninstalling Nix
+
+To completely remove Nix and restore your system to its pre-Nix state:
+
+```bash
+ujust uninstall-nix
+# After Nix is uninstalled, undo the system preparation:
+ujust undo-nix-prep
+# System will reboot automatically
+```
+
+The `uninstall-nix` command removes all installed Nix packages (installed via `nix profile install`) and uninstalls Nix completely. The `undo-nix-prep` command removes the composefs and transient root configuration, restoring your system to its original state, then automatically reboots.
 
 <details>
 <summary>Manual Installation Instructions (if preferred)</summary>

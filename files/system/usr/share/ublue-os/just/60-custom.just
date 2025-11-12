@@ -19,7 +19,6 @@ io.podman_desktop.PodmanDesktop
 me.iepure.devtoolbox
 org.fkoehler.KTailctl
 org.gnome.DejaDup
-sh.loft.devpod
 org.openrgb.OpenRGB
 org.remmina.Remmina
 io.github.dvlv.boxbuddyrs
@@ -46,7 +45,6 @@ io.podman_desktop.PodmanDesktop|manage Podman and other containers
 me.iepure.devtoolbox|dev tools at your fingertips
 org.fkoehler.KTailctl|manage and monitor Tailscale
 org.gnome.DejaDup|protect from data loss
-sh.loft.devpod|open-source version of Codespaces
 org.openrgb.OpenRGB|manage system LEDs etc.
 org.remmina.Remmina|Remote desktop app
 io.github.dvlv.boxbuddyrs|manage distroboxes
@@ -467,3 +465,92 @@ install-nix:
         echo "Please check the error messages above and try again"
         exit 1
     fi
+
+# Uninstall all Nix packages and remove Nix completely
+uninstall-nix:
+    #!/usr/bin/env bash
+    echo "Uninstalling Nix and all installed packages..."
+    echo
+    
+    # Check if Nix is installed
+    if ! command -v nix >/dev/null 2>&1; then
+        echo "✓ Nix is not installed"
+        exit 0
+    fi
+    
+    echo "Step 1: Removing all packages from nix profile..."
+    # List installed packages in the profile
+    if nix profile list 2>/dev/null | grep -q '.'; then
+        echo "Installed packages:"
+        nix profile list
+        echo
+        echo "Removing all packages from profile..."
+        # Get all package indices and remove them
+        nix profile list | awk '{print $1}' | tac | while read -r idx; do
+            if [[ -n "$idx" ]]; then
+                echo "Removing package at index $idx..."
+                nix profile remove "$idx" 2>/dev/null || true
+            fi
+        done
+        echo "✓ Profile packages removed"
+    else
+        echo "✓ No profile packages to remove"
+    fi
+    echo
+    
+    echo "Step 2: Running Determinate Nix uninstaller..."
+    if /nix/nix-installer uninstall --no-confirm; then
+        echo "✓ Nix uninstaller completed successfully"
+    else
+        echo "✗ Nix uninstaller failed or not found"
+        echo "Attempting manual cleanup..."
+        
+        # Manual cleanup steps
+        echo "Stopping Nix services..."
+        sudo systemctl stop nix-daemon.socket nix-daemon.service 2>/dev/null || true
+        sudo systemctl disable nix-daemon.socket nix-daemon.service 2>/dev/null || true
+        
+        echo "Removing Nix directories..."
+        sudo rm -rf /nix /etc/nix ~/.nix-profile ~/.nix-defexpr ~/.nix-channels 2>/dev/null || true
+        sudo rm -rf /var/lib/nix ~/.local/state/nix 2>/dev/null || true
+        
+        echo "Removing Nix users and group..."
+        for i in {1..32}; do
+            sudo userdel "nixbld$i" 2>/dev/null || true
+        done
+        sudo groupdel nixbld 2>/dev/null || true
+    fi
+    echo
+    
+    echo "✅ Nix uninstallation complete!"
+    echo "📝 You may want to remove Nix-related lines from your shell configuration files."
+    echo "   To complete cleanup, run: ujust undo-nix-prep"
+
+# Undo nix-prep configuration and restore system to pre-Nix state (requires reboot)
+undo-nix-prep:
+    #!/usr/bin/env bash
+    echo "Undoing Nix preparation configuration..."
+    echo "This will remove transient root and composefs settings, then reboot."
+    echo
+    
+    # Check if the prepare-root.conf exists
+    if [ ! -f /etc/ostree/prepare-root.conf ]; then
+        echo "✓ /etc/ostree/prepare-root.conf does not exist - nothing to undo"
+        exit 0
+    fi
+    
+    echo "Current configuration:"
+    cat /etc/ostree/prepare-root.conf
+    echo
+    
+    # Remove the prepare-root.conf
+    sudo rm -f /etc/ostree/prepare-root.conf
+    echo "✓ Removed /etc/ostree/prepare-root.conf"
+    echo
+    
+    echo "⚠️  System will now reconfigure initramfs and REBOOT"
+    echo "After reboot, the system will be restored to pre-Nix state."
+    echo
+    
+    # Untrack the config and reboot
+    rpm-ostree initramfs-etc --reboot --untrack=/etc/ostree/prepare-root.conf
