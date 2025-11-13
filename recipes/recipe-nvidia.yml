@@ -35,8 +35,6 @@ modules:
         - gcc
         - gcc-c++
         - gcc-gfortran
-        - glib2
-        - gvfs
         - make
         - fastfetch
         - htop
