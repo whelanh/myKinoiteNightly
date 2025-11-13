@@ -26,7 +26,7 @@ modules:
         - atim/starship
         - ublue-os/packages # ublue-os maintained packages
         - ryanabx/cosmic-epoch # COSMIC desktop environment
-        - embeddedsmithd/python-validity # Synaptics fingerprint reader support
+        - sneexy/python-validity # Synaptics fingerprint reader support
     install:
       packages:
         - dnf-plugins-core # needed for copr
@@ -46,6 +46,9 @@ modules:
         - git
         - fuse
         - python3-validity  # For Synaptics Thinkpad fingerprint reader
+        - open-fprintd
+        - fprintd-clients
+        - fprintd-clients-pam
         - edk2-ovmf
         - libvirt
         - libvirt-nss
