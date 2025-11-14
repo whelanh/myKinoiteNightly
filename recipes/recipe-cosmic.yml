@@ -11,7 +11,10 @@ image-version: rawhide # use specific version tag (41, 42, 43, or rawhide)
 # module configuration, executed in order
 # you can include multiple instances of the same module
 modules:
+  # Add COPR repo for COSMIC beta.6 packages and upgrade from base image's beta.5
   - type: rpm-ostree
+    repos:
+      - https://copr.fedorainfracloud.org/coprs/ryanabx/cosmic-epoch/repo/fedora-rawhide/ryanabx-cosmic-epoch-fedora-rawhide.repo
     install:
       - kernel-modules
       - kernel-modules-extra
@@ -19,6 +22,36 @@ modules:
       - mesa-dri-drivers
       - xorg-x11-drv-nouveau
       - libdrm
+      - glycin-thumbnailer  # Required for image thumbnails in COSMIC Files
+      # Install/upgrade all COSMIC packages from ryanbex repo
+      # These will override the packages from the base cosmic-atomic image
+      - cosmic-applets
+      - cosmic-app-library  
+      - cosmic-bg
+      - cosmic-comp
+      - cosmic-desktop
+      - cosmic-edit
+      - cosmic-files
+      - cosmic-greeter
+      - cosmic-icon-theme
+      - cosmic-idle
+      - cosmic-initial-setup
+      - cosmic-launcher
+      - cosmic-notifications
+      - cosmic-osd
+      - cosmic-panel
+      - cosmic-player
+      - cosmic-randr
+      - cosmic-screenshot
+      - cosmic-session
+      - cosmic-settings
+      - cosmic-settings-daemon
+      - cosmic-store
+      - cosmic-term
+      - cosmic-wallpapers
+      - cosmic-workspaces
+      - pop-launcher
+      - xdg-desktop-portal-cosmic
 
   - type: dnf
     repos:
