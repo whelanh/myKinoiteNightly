@@ -5,7 +5,7 @@ name: cosmic-latest-ublue
 description: Cosmic w/Ublue + NVIDIA Drivers
 
 # the base image to build on top of (FROM) and the version tag to use
-base-image: quay.io/fedora-ostree-desktops/kinoite-nightly
+base-image: quay.io/fedora-ostree-desktops/cosmic-atomic
 image-version: rawhide # use specific version tag (41, 42, 43, or rawhide)
 
 # module configuration, executed in order
@@ -24,8 +24,7 @@ modules:
     repos:
       copr:
         - atim/starship
-        - ublue-os/packages # ublue-os maintained packages
-        - ryanabx/cosmic-epoch # COSMIC desktop environment
+        - ublue-os/packages # ublue-os maintained packages      
     install:
       packages:
         - dnf-plugins-core # needed for copr
@@ -41,7 +40,6 @@ modules:
         - duf
         - cmake
         - cairo
-        - cosmic-desktop
         - git
         - fuse
         - fprintd  # For Thinkpad fingerprint reader
