@@ -23,35 +23,37 @@ modules:
       - xorg-x11-drv-nouveau
       - libdrm
       - glycin-thumbnailer  # Required for image thumbnails in COSMIC Files
-      # Install/upgrade all COSMIC packages from ryanbex repo
-      # These will override the packages from the base cosmic-atomic image
-      - cosmic-applets
-      - cosmic-app-library  
-      - cosmic-bg
-      - cosmic-comp
-      - cosmic-desktop
-      - cosmic-edit
-      - cosmic-files
-      - cosmic-greeter
-      - cosmic-icon-theme
-      - cosmic-idle
-      - cosmic-initial-setup
-      - cosmic-launcher
-      - cosmic-notifications
-      - cosmic-osd
-      - cosmic-panel
-      - cosmic-player
-      - cosmic-randr
-      - cosmic-screenshot
-      - cosmic-session
-      - cosmic-settings
-      - cosmic-settings-daemon
-      - cosmic-store
-      - cosmic-term
-      - cosmic-wallpapers
-      - cosmic-workspaces
-      - pop-launcher
-      - xdg-desktop-portal-cosmic
+    replace:
+      # Replace base image beta.5 packages with beta.6 from ryanabx COPR
+      - from-repo: copr:copr.fedorainfracloud.org:ryanabx:cosmic-epoch
+        packages:
+          - cosmic-applets
+          - cosmic-app-library  
+          - cosmic-bg
+          - cosmic-comp
+          - cosmic-desktop
+          - cosmic-edit
+          - cosmic-files
+          - cosmic-greeter
+          - cosmic-icon-theme
+          - cosmic-idle
+          - cosmic-initial-setup
+          - cosmic-launcher
+          - cosmic-notifications
+          - cosmic-osd
+          - cosmic-panel
+          - cosmic-player
+          - cosmic-randr
+          - cosmic-screenshot
+          - cosmic-session
+          - cosmic-settings
+          - cosmic-settings-daemon
+          - cosmic-store
+          - cosmic-term
+          - cosmic-wallpapers
+          - cosmic-workspaces
+          - pop-launcher
+          - xdg-desktop-portal-cosmic
 
   - type: dnf
     repos:
