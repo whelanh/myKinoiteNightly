@@ -25,7 +25,7 @@ modules:
       - glycin-thumbnailer  # Required for image thumbnails in COSMIC Files
     replace:
       # Replace base image beta.5 packages with beta.6 from ryanabx COPR
-      - from-repo: copr:copr.fedorainfracloud.org:ryanabx:cosmic-epoch
+      - from-repo: https://copr.fedorainfracloud.org/coprs/ryanabx/cosmic-epoch/repo/fedora-rawhide/ryanabx-cosmic-epoch-fedora-rawhide.repo
         packages:
           - cosmic-applets
           - cosmic-app-library  
