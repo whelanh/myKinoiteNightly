@@ -5,7 +5,7 @@
 
 <sub>See the [BlueBuild docs](https://blue-build.org/how-to/setup/) for quick setup instructions for setting up your own repository based on this template.</sub>
 
-## 💽 My Custom Image
+## 💽 My Custom Image [@11/16/2025 -- I've temporarily changed image to Kinoite rawhide, Nightly hasn't been updated for awhile]
 
 This repository builds a custom **Fedora Kinoite image based on the nightly rawhide build**:
 
