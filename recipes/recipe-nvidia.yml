@@ -5,7 +5,7 @@ name: kinoite-nightly-ublue
 description: Kinoite Nightly Rawhide w/Ublue + NVIDIA Drivers
 
 # the base image to build on top of (FROM) and the version tag to use
-base-image: quay.io/fedora-ostree-desktops/kinoite-nightly
+base-image: quay.io/fedora-ostree-desktops/kinoite
 image-version: rawhide # latest is also supported if you want new updates ASAP
 
 # module configuration, executed in order
