@@ -13,8 +13,6 @@ image-version: rawhide # use specific version tag (41, 42, 43, or rawhide)
 modules:
   # Add COPR repo for COSMIC beta.6 packages and upgrade from base image's beta.5
   - type: rpm-ostree
-    repos:
-      - https://copr.fedorainfracloud.org/coprs/ryanabx/cosmic-epoch/repo/fedora-rawhide/ryanabx-cosmic-epoch-fedora-rawhide.repo
     install:
       - kernel-modules
       - kernel-modules-extra
@@ -22,7 +20,6 @@ modules:
       - mesa-dri-drivers
       - xorg-x11-drv-nouveau
       - libdrm
-      - glycin-thumbnailer  # Required for image thumbnails in COSMIC Files
 
   - type: dnf
     repos:
