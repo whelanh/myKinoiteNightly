@@ -2,7 +2,7 @@ name: bluebuild
 on:
   schedule:
     - cron:
-        "00 09 * * *" # build at 09:00 UTC every day (kinoite nightly start building at 5:00 UTC)
+        "00 07 * * *" # build at 07:00 UTC every day (kinoite nightly start building at 5:00 UTC)
         # (20 minutes after last ublue images start building)
   push:
     paths-ignore: # don't rebuild if only documentation has changed
