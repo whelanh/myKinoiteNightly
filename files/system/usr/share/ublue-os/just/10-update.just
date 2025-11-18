@@ -61,7 +61,7 @@ update VERB_LEVEL="full":
       update_command "rpm-ostree update"
 
       # Run flatpak update
-      update_command "flatpak update -y"
+      update_command "sudo flatpak update -y"
 
       # Run distrobox upgrade
       update_command "distrobox upgrade -a"
