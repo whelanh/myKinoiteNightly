@@ -19,7 +19,7 @@ The nightly Kinoite build images use the COPR solopasha git repos for the latest
 
 Some custom ujust 'recipes' are provided to install homebrew, Universal Blue's Aurora brew bundle, and a curated list of flatpaks if desired.  See [/files/system/usr/share/ublue-os/just/60-custom.just](https://github.com/whelanh/myKinoiteNightly/blob/main/files/system/usr/share/ublue-os/just/60-custom.just) for the list of flatpaks. 
 
-For those interested in the Cosmic desktop as an alternative login option, I've also added ryanbex/cosmic-epoch COPR repo and `cosmic-desktop` to the installed package list.
+For those interested in the Cosmic desktop as an alternative login option, I've also added ryanbex/cosmic-epoch COPR repo and `cosmic-desktop` to the installed package list.  If you want a pure Cosmic rawhide image, this project also builds a `ghcr.io/whelanh/cosmic-latest-ublue:latest` image which you can rebase to instead.  It also has all of the custom ujust recipes and added packages of the kinoite-nightly image. See [/recipes/recipe-cosmic.yml](https://github.com/whelanh/myKinoiteNightly/blob/main/recipes/recipe-cosmic.yml)
 
 Also, if interested in Nix, automated ujust commands are available to simplify the installation process.
 
