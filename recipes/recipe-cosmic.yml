@@ -49,6 +49,7 @@ modules:
         - libvirt
         - libvirt-nss
         - onedrive
+        - PackageKit
         - docker
         - distrobox
         - podman-compose
