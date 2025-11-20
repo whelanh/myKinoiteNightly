@@ -1,11 +1,11 @@
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 # image will be published to ghcr.io/<user>/<name>
-name: cosmic-latest-ublue
+name: sway-latest-ublue
 # description will be included in the image's metadata
-description: Cosmic w/Ublue + NVIDIA Drivers
+description: Sway w/Ublue + NVIDIA Drivers
 
 # the base image to build on top of (FROM) and the version tag to use
-base-image: quay.io/fedora-ostree-desktops/cosmic-atomic
+base-image: quay.io/fedora-ostree-desktops/sway-atomic
 image-version: rawhide # use specific version tag (41, 42, 43, or rawhide)
 
 # module configuration, executed in order
