@@ -24,3 +24,8 @@ brew "yq"
 brew "zoxide"
 brew "cairo"
 brew "packagekit"
+brew "ripgrep"
+brew "lsd"
+brew "xplr"
+brew "aria2c"
+
