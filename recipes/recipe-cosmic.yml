@@ -25,6 +25,9 @@ modules:
       copr:
         - atim/starship
         - ublue-os/packages # ublue-os maintained packages      
+      # Add Tailscale's official repo because Fedora package is outdated and has a CVE
+      files:
+        - https://pkgs.tailscale.com/stable/fedora/tailscale.repo        
     install:
       packages:
         - dnf-plugins-core # needed for copr

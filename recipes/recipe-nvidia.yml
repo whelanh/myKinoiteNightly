@@ -27,7 +27,8 @@ modules:
         - ublue-os/packages # ublue-os maintained packages
         - ryanabx/cosmic-epoch # COSMIC desktop environment
       # Add Tailscale's official repo because Fedora package is outdated and has a CVE
-      - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+      files:
+        - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
     install:
       packages:
         - dnf-plugins-core # needed for copr
