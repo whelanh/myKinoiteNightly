@@ -49,6 +49,8 @@ modules:
         - fuse
         - fprintd
         - fprintd-pam
+        - tcl8-devel 
+        - tk8-devel 
         - edk2-ovmf
         - libvirt
         - libvirt-nss
