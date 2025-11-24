@@ -51,6 +51,9 @@ modules:
         - fprintd-pam
         - tcl8-devel 
         - tk8-devel 
+        - python-pyqt6
+        - qtermwidget
+        - qtermwidget-devel
         - edk2-ovmf
         - libvirt
         - libvirt-nss
