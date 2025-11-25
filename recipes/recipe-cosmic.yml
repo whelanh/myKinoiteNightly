@@ -48,8 +48,7 @@ modules:
         - tcl8-devel 
         - tk8-devel 
         - python-pyqt6
-        - qtermwidget
-        - qtermwidget-devel
+        - python-pyqt6-webengine
         - fprintd  # For Thinkpad fingerprint reader
         - fprintd-pam
         - edk2-ovmf

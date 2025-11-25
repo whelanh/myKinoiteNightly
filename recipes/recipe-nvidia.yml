@@ -52,8 +52,7 @@ modules:
         - tcl8-devel 
         - tk8-devel 
         - python-pyqt6
-        - qtermwidget
-        - qtermwidget-devel
+        - python-pyqt6-webengine
         - edk2-ovmf
         - libvirt
         - libvirt-nss
