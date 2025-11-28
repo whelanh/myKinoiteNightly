@@ -28,7 +28,6 @@ it.mijorus.gearlever
 
 # Application descriptions - defined once and used by all recipes
 DESCRIPTIONS := '''
-io.github.benini.scid|Shane's Chess Information Database
 be.alexandervanhee.gradia|Gradia - gradient editor
 com.github.xournalpp.xournalpp|Xournal++ - handwriting notetaking software
 org.sqlitebrowser.sqlitebrowser|DB Browser for SQLite
