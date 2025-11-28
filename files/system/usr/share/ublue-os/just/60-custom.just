@@ -3,7 +3,6 @@
 
 # Development and productivity Flatpaks list - defined once and used by all recipes
 FLATPAKS := '''
-io.github.benini.scid
 be.alexandervanhee.gradia
 com.github.xournalpp.xournalpp
 org.sqlitebrowser.sqlitebrowser
