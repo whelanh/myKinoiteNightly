@@ -33,7 +33,6 @@ modules:
         - dnf-plugins-core # needed for copr
         - micro
         - starship
-        - ptyxis
         - zsh
         - gcc
         - gcc-c++
@@ -46,12 +45,12 @@ modules:
         - cairo
         - git
         - fuse
+        - fprintd  # For Thinkpad fingerprint reader
+        - fprintd-pam
         - tcl8-devel 
         - tk8-devel 
         - python-pyqt6
         - python-pyqt6-webengine
-        - fprintd  # For Thinkpad fingerprint reader
-        - fprintd-pam
         - edk2-ovmf
         - libvirt
         - libvirt-nss
