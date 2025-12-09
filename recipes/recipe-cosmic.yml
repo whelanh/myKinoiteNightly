@@ -33,6 +33,7 @@ modules:
         - dnf-plugins-core # needed for copr
         - micro
         - starship
+        - ptyxis
         - zsh
         - gcc
         - gcc-c++
