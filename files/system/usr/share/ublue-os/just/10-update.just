@@ -58,7 +58,7 @@ update VERB_LEVEL="full":
       }
 
       # Run rpm-ostree update
-      update_command "rpm-ostree update"
+      update_command "sudo bootc upgrade"
 
       # Run flatpak update
       update_command "sudo flatpak update -y"
