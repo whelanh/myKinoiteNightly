@@ -1,0 +1,67 @@
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+# image will be published to ghcr.io/<user>/<name>
+name: asus-bazzite-dx
+# description will be included in the image's metadata
+description: Custom bazzite-dx
+
+# the base image to build on top of (FROM) and the version tag to use
+base-image: ghcr.io/ublue-os/bazzite-dx-nvidia
+image-version: latest # use specific version tag (41, 42, 43, or rawhide)
+
+# module configuration, executed in order
+# you can include multiple instances of the same module
+modules:
+  - type: dnf
+    install:
+      packages:
+        - micro
+        - zsh
+        - gcc
+        - gcc-c++
+        - gcc-gfortran
+        - make
+        - htop
+        - duf
+        - cmake
+        - cairo
+        - git
+        - fuse
+        - fprintd  # For Thinkpad fingerprint reader
+        - fprintd-pam
+        - tcl8-devel 
+        - tk8-devel 
+        - python-pyqt6
+        - python-pyqt6-webengine
+        - edk2-ovmf
+        - libvirt
+        - libvirt-nss
+        - onedrive
+        - PackageKit
+        - docker
+        - distrobox
+        - podman-compose
+        - podman-machine
+        - qemu-char-spice
+        - qemu-device-display-virtio-gpu
+        - qemu-device-display-virtio-vga
+        - qemu-device-usb-redirect
+        - qemu-img
+        - qemu-system-x86-core
+        - qemu-user-binfmt
+        - qemu-user-static
+        - qemu
+        - virt-manager
+
+    remove:
+      packages:
+        # Removing firefox (in favor of the flatpak)
+        # "firefox" is the main package, "firefox-langpacks" is a dependency
+        - firefox
+        #- firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)  
+
+  - type: files
+    files:
+      - source: system
+        destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
+
+  - type: signing # this sets up the proper policy & signing files for signed images to work fully
