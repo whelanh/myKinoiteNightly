@@ -25,7 +25,6 @@ modules:
       copr:
         - atim/starship
         - ublue-os/packages # ublue-os maintained packages  
-        - lukenukem/asus-linux   # For asus laptop users, provides ausctl tool 
       # Add Tailscale's official repo because Fedora package is outdated and has a CVE
       files:
         - https://pkgs.tailscale.com/stable/fedora/tailscale.repo        
@@ -48,8 +47,6 @@ modules:
         - fuse
         - fprintd  # For Thinkpad fingerprint reader
         - fprintd-pam
-        - asusctl  # For Asus laptop functionality
-        - supergfxctl  # For Asus laptop functionality
         - tcl8-devel 
         - tk8-devel 
         - python-pyqt6
