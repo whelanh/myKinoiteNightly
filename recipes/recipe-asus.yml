@@ -12,8 +12,12 @@ image-version: latest # use specific version tag (41, 42, 43, or rawhide)
 # you can include multiple instances of the same module
 modules:
   - type: dnf
+    repos:
+      copr:
+        - ryanabx/cosmic-epoch # COSMIC desktop environment
     install:
       packages:
+        - cosmic-desktop
         - micro
         - zsh
         - gcc
