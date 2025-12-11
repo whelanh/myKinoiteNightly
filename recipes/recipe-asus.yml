@@ -37,23 +37,6 @@ modules:
         - python-pyqt6
         - python-pyqt6-webengine
         - edk2-ovmf
-        - libvirt
-        - libvirt-nss
-        - onedrive
-        - PackageKit
-        - docker
-        - distrobox
-        - podman-compose
-        - podman-machine
-        - qemu-char-spice
-        - qemu-device-display-virtio-gpu
-        - qemu-device-display-virtio-vga
-        - qemu-device-usb-redirect
-        - qemu-img
-        - qemu-system-x86-core
-        - qemu-user-binfmt
-        - qemu-user-static
-        - qemu
         - virt-manager
 
     remove:
