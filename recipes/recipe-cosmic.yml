@@ -48,7 +48,7 @@ modules:
         - fuse
         - fprintd  # For Thinkpad fingerprint reader
         - fprintd-pam
-        - ausctl  # For Asus laptop functionality
+        - asusctl  # For Asus laptop functionality
         - supergfxctl  # For Asus laptop functionality
         - tcl8-devel 
         - tk8-devel 
