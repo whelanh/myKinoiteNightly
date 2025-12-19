@@ -6,7 +6,7 @@
 <sub>See the [BlueBuild docs](https://blue-build.org/how-to/setup/) for quick setup instructions for setting up your own repository based on this template.</sub>
 
 ## 💽 My Custom Image
-![Custom](https://img.shields.io/badge/Custom-0066cc?style=flat)*[@11/16/2025 -- I've temporarily changed image to Kinoite rawhide because Nightly hasn't been updated for awhile. To check status see: [https://quay.io/repository/fedora-ostree-desktops/kinoite-nightly?tab=tags](https://gitlab.com/fedora/ostree/ci-test/-/pipelines)*
+![Custom](https://img.shields.io/badge/Custom-0066cc?style=flat)*[@11/16/2025 -- I've temporarily changed image to Kinoite-Nightly:43 because Kinoite-Nightly Rawhide hasn't been updated for awhile. To check status see: [https://quay.io/repository/fedora-ostree-desktops/kinoite-nightly?tab=tags](https://gitlab.com/fedora/ostree/ci-test/-/pipelines)*
 
 This repository builds a custom **Fedora Kinoite image based on the nightly rawhide build**:
 
