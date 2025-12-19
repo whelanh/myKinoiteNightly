@@ -80,6 +80,11 @@ modules:
         - ublue-os-just
         - ublue-bling
         - ublue-brew
+        - ublue-os-flatpak
+        - ublue-os-media-automount-udev
+        - ublue-os-udev-rules
+        - flatpak-builder
+        - flatpak-spawn
         - aurora-readymade-config
     remove:
       packages:
