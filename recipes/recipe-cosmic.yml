@@ -31,8 +31,6 @@ modules:
     install:
       packages:
         - dnf-plugins-core # needed for copr
-        - micro
-        - starship
         - zsh
         - gcc
         - gcc-c++

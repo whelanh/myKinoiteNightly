@@ -27,4 +27,5 @@ brew "ripgrep"
 brew "lsd"
 brew "xplr"
 brew "aria2"
+brew "micro"
 

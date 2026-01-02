@@ -18,7 +18,6 @@ modules:
     install:
       packages:
         - cosmic-desktop
-        - micro
         - zsh
         - gcc
         - gcc-c++
