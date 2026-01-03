@@ -5,7 +5,7 @@ name: asus-bazzite-dx
 description: Custom bazzite-dx
 
 # the base image to build on top of (FROM) and the version tag to use
-base-image: ghcr.io/ublue-os/bazzite-dx-nvidia
+base-image: ghcr.io/ublue-os/aurora-dx
 image-version: latest # use specific version tag (41, 42, 43, or rawhide)
 
 # module configuration, executed in order
