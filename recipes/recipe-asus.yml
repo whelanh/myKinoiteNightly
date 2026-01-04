@@ -6,7 +6,7 @@ description: Custom bazzite-dx
 
 # the base image to build on top of (FROM) and the version tag to use
 base-image: ghcr.io/ublue-os/aurora-dx
-image-version: stable-daily # use specific version tag (41, 42, 43, or rawhide)
+image-version: latest # use specific version tag (41, 42, 43, or rawhide)
 
 # module configuration, executed in order
 # you can include multiple instances of the same module
