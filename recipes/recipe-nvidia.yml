@@ -23,6 +23,7 @@ modules:
   - type: dnf
     repos:
       copr:
+        - solopasha/plasma-unstable        
         - atim/starship
         - ublue-os/packages # ublue-os maintained packages
         - ryanabx/cosmic-epoch # COSMIC desktop environment
