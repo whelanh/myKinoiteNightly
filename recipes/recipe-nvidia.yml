@@ -26,6 +26,7 @@ modules:
         - atim/starship
         - ublue-os/packages # ublue-os maintained packages
         - ryanabx/cosmic-epoch # COSMIC desktop environment
+        - "@kdesig/kde-beta"
       # Add Tailscale's official repo because Fedora package is outdated and has a CVE
       files:
         - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
