@@ -83,7 +83,7 @@ modules:
         - ublue-os-udev-rules
         - flatpak-builder
         - flatpak-spawn
-        - aurora-readymade-config
+        #- aurora-readymade-config
     remove:
       packages:
         # Removing firefox (in favor of the flatpak)
