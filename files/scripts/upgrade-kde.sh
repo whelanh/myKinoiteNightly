@@ -51,6 +51,9 @@ dnf download --disablerepo='*' --enablerepo="$COPR_NAME" \
     --exclude='*-debuginfo,*-debugsource' \
     $PACKAGES_TO_REPLACE
 
+# Remove any source packages that may have been downloaded
+rm -f "$DOWNLOAD_DIR"/*.src.rpm
+
 if [ -z "$(ls -A $DOWNLOAD_DIR)" ]; then
     echo "Error: Failed to download packages."
     exit 1
@@ -59,6 +62,7 @@ fi
 echo "Executing rpm-ostree override replace with downloaded packages..."
 rpm-ostree override replace \
     --experimental \
-    $DOWNLOAD_DIR/*.rpm
+    $DOWNLOAD_DIR/*.x86_64.rpm \
+    $DOWNLOAD_DIR/*.noarch.rpm
 
 rm -rf "$DOWNLOAD_DIR"
