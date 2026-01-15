@@ -1,0 +1,50 @@
+#!/bin/bash
+
+set -ouex pipefail
+
+# Workaround for:
+# error: Checkout kde-beta: opendir(kde-beta): No such file or directory
+# https://github.com/blue-build/bluebuild/issues/1435
+# https://github.com/coreos/rpm-ostree/issues/4187
+mkdir -p /var/lib/alternatives
+
+COPR_URL="https://copr.fedorainfracloud.org/coprs/g/kdesig/kde-beta/repo/fedora-rawhide/group_kdesig-kde-beta-fedora-rawhide.repo"
+COPR_NAME="group_kdesig-kde-beta-fedora-rawhide"
+REPO_FILE="/etc/yum.repos.d/kde-beta.repo"
+
+# 1. Enable the COPR so dnf can query it
+curl -L -o "$REPO_FILE" "$COPR_URL"
+
+# 2. Get the list of all packages in the COPR
+echo "Querying COPR for packages..."
+# We use dnf repoquery to get the list of package NAMES present in the repo
+AVAILABLE_PACKAGES=$(dnf repoquery --disablerepo='*' --enablerepo="$COPR_NAME" --qf '%{name}' | sort -u)
+
+if [ -z "$AVAILABLE_PACKAGES" ]; then
+    echo "Error: No packages found in COPR repository!"
+    exit 1
+fi
+
+# 3. Find which of these packages are currently installed in the base image
+echo "Identifying installed packages to replace..."
+PACKAGES_TO_REPLACE=""
+
+for pkg in $AVAILABLE_PACKAGES; do
+    if rpm -q "$pkg" > /dev/null 2>&1; then
+        echo "  - Marking for replacement: $pkg"
+        PACKAGES_TO_REPLACE="$PACKAGES_TO_REPLACE $pkg"
+    fi
+done
+
+if [ -z "$PACKAGES_TO_REPLACE" ]; then
+    echo "No matching packages found to replace."
+    exit 0
+fi
+
+# 4. Perform the massive override replace
+# We use the --from repo argument to pull the packages directly from the COPR
+echo "Executing rpm-ostree override replace..."
+rpm-ostree override replace \
+    --experimental \
+    --from repo="copr:copr.fedorainfracloud.org:kdesig:kde-beta" \
+    $PACKAGES_TO_REPLACE
