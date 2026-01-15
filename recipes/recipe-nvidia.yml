@@ -43,7 +43,6 @@ modules:
         - cmake
         - cairo
         - cosmic-desktop
-        - snapd
         - git
         - fuse
         - fprintd
