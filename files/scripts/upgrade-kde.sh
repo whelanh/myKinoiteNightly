@@ -8,7 +8,7 @@ set -ouex pipefail
 # https://github.com/coreos/rpm-ostree/issues/4187
 mkdir -p /var/lib/alternatives
 
-COPR_URL="https://copr.fedorainfracloud.org/coprs/g/kdesig/kde-beta/repo/fedora-rawhide/group_kdesig-kde-beta-fedora-rawhide.repo"
+COPR_URL="https://copr.fedorainfracloud.org/coprs/g/kdesig/kde-beta/repo/fedora-43/group_kdesig-kde-beta-fedora-43.repo"
 COPR_NAME="copr:copr.fedorainfracloud.org:group_kdesig:kde-beta"
 REPO_FILE="/etc/yum.repos.d/kde-beta.repo"
 
