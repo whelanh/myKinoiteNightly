@@ -18,7 +18,7 @@ curl -L -o "$REPO_FILE" "$COPR_URL"
 # 2. Get the list of all packages in the COPR
 echo "Querying COPR for packages..."
 # We use dnf repoquery to get the list of package NAMES present in the repo
-AVAILABLE_PACKAGES=$(dnf repoquery --disablerepo='*' --enablerepo="$COPR_NAME" --arch=x86_64,noarch --exclude='*-debuginfo,*-debugsource' --qf '%{name}.%{arch}\n' | sort -u)
+AVAILABLE_PACKAGES=$(dnf repoquery --disablerepo='*' --enablerepo="$COPR_NAME" --arch=x86_64,noarch --exclude='*-debuginfo,*-debugsource' --qf '%{name}\n' | sort -u)
 
 if [ -z "$AVAILABLE_PACKAGES" ]; then
     echo "Error: No packages found in COPR repository!"
@@ -43,8 +43,23 @@ fi
 
 # 4. Perform the massive override replace
 # We use the --from repo argument to pull the packages directly from the COPR
-echo "Executing rpm-ostree override replace..."
+# 4. Download and replace
+echo "Downloading packages from COPR..."
+DOWNLOAD_DIR=$(mktemp -d)
+dnf download --disablerepo='*' --enablerepo="$COPR_NAME" \
+    --destdir="$DOWNLOAD_DIR" \
+    --arch=x86_64,noarch \
+    --exclude='*-debuginfo,*-debugsource' \
+    $PACKAGES_TO_REPLACE
+
+if [ -z "$(ls -A $DOWNLOAD_DIR)" ]; then
+    echo "Error: Failed to download packages."
+    exit 1
+fi
+
+echo "Executing rpm-ostree override replace with downloaded packages..."
 rpm-ostree override replace \
     --experimental \
-    --from repo="$COPR_NAME" \
-    $PACKAGES_TO_REPLACE
+    $DOWNLOAD_DIR/*.rpm
+
+rm -rf "$DOWNLOAD_DIR"
