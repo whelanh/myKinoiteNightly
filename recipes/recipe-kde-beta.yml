@@ -11,9 +11,6 @@ modules:
       - https://copr.fedorainfracloud.org/coprs/g/kdesig/kde-beta/repo/fedora-rawhide/group_kdesig-kde-beta-fedora-rawhide.repo
     install:
       # explicit install to ensure we pull the beta versions
-      - plasma-desktop
-      - plasma-workspace
-      - kwin
       # Drivers from original recipe
       - kernel-modules
       - kernel-modules-extra
@@ -21,6 +18,10 @@ modules:
       - mesa-dri-drivers
       - xorg-x11-drv-nouveau
       - libdrm
+
+  - type: script
+    scripts:
+      - upgrade-kde.sh
 
   - type: dnf
     repos:
