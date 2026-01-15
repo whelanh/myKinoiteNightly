@@ -18,7 +18,7 @@ curl -L -o "$REPO_FILE" "$COPR_URL"
 # 2. Get the list of all packages in the COPR
 echo "Querying COPR for packages..."
 # We use dnf repoquery to get the list of package NAMES present in the repo
-AVAILABLE_PACKAGES=$(dnf repoquery --disablerepo='*' --enablerepo="$COPR_NAME" --qf '%{name}' | sort -u)
+AVAILABLE_PACKAGES=$(dnf repoquery --disablerepo='*' --enablerepo="$COPR_NAME" --qf '%{name}\n' | sort -u)
 
 if [ -z "$AVAILABLE_PACKAGES" ]; then
     echo "Error: No packages found in COPR repository!"
