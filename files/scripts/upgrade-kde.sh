@@ -31,8 +31,10 @@ PACKAGES_TO_REPLACE=""
 
 for pkg in $AVAILABLE_PACKAGES; do
     if rpm -q "$pkg" > /dev/null 2>&1; then
-        echo "  - Marking for replacement: $pkg"
-        PACKAGES_TO_REPLACE="$PACKAGES_TO_REPLACE $pkg"
+        # Get the architecture of the installed package
+        ARCH=$(rpm -q --queryformat '%{ARCH}' "$pkg")
+        echo "  - Marking for replacement: $pkg ($ARCH)"
+        PACKAGES_TO_REPLACE="$PACKAGES_TO_REPLACE ${pkg}.${ARCH}"
     fi
 done
 
