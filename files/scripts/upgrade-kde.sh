@@ -9,7 +9,7 @@ set -ouex pipefail
 mkdir -p /var/lib/alternatives
 
 COPR_URL="https://copr.fedorainfracloud.org/coprs/g/kdesig/kde-beta/repo/fedora-rawhide/group_kdesig-kde-beta-fedora-rawhide.repo"
-COPR_NAME="group_kdesig-kde-beta-fedora-rawhide"
+COPR_NAME="copr:copr.fedorainfracloud.org:group_kdesig:kde-beta"
 REPO_FILE="/etc/yum.repos.d/kde-beta.repo"
 
 # 1. Enable the COPR so dnf can query it
@@ -46,5 +46,5 @@ fi
 echo "Executing rpm-ostree override replace..."
 rpm-ostree override replace \
     --experimental \
-    --from repo="copr:copr.fedorainfracloud.org:kdesig:kde-beta" \
+    --from repo="$COPR_NAME" \
     $PACKAGES_TO_REPLACE
