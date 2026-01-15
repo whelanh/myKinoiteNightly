@@ -28,8 +28,9 @@ jobs:
         recipe:
           # !! Add your recipes here
           - recipe-nvidia.yml
+          - recipe-kde-beta.yml
           #- recipe-cosmic.yml
-          - recipe-asus.yml
+          #- recipe-asus.yml
     steps:
       # the build is fully handled by the reusable github action
       - name: Build Custom Image

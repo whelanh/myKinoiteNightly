@@ -1,0 +1,98 @@
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+name: kinoite-kde-beta
+description: Kinoite Rawhide with KDE Plasma 6.6 Beta (from @kdesig/kde-beta)
+base-image: quay.io/fedora-ostree-desktops/kinoite-nightly
+image-version: rawhide # Matching the 'fedora-rawhide' target of the COPR
+
+modules:
+  - type: rpm-ostree
+    repos:
+      # The verified KDE Beta COPR (Jan 2026)
+      - https://copr.fedorainfracloud.org/coprs/g/kdesig/kde-beta/repo/fedora-rawhide/group_kdesig-kde-beta-fedora-rawhide.repo
+    install:
+      # explicit install to ensure we pull the beta versions
+      - plasma-desktop
+      - plasma-workspace
+      - kwin
+      # Drivers from original recipe
+      - kernel-modules
+      - kernel-modules-extra
+      - linux-firmware
+      - mesa-dri-drivers
+      - xorg-x11-drv-nouveau
+      - libdrm
+
+  - type: dnf
+    repos:
+      copr:
+        - atim/starship
+        - ublue-os/packages
+        - ryanabx/cosmic-epoch
+      files:
+        - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+    install:
+      packages:
+        # Original package list
+        - dnf-plugins-core
+        - zsh
+        - gcc
+        - gcc-c++
+        - gcc-gfortran
+        - make
+        - fastfetch
+        - htop
+        - duf
+        - cmake
+        - cairo
+        - cosmic-desktop
+        - git
+        - fuse
+        - fprintd
+        - fprintd-pam
+        - tcl8-devel 
+        - tk8-devel 
+        - python-pyqt6
+        - python-pyqt6-webengine
+        - edk2-ovmf
+        - libvirt
+        - libvirt-nss
+        - onedrive
+        - PackageKit
+        - docker
+        - distrobox
+        - podman-compose
+        - podman-machine
+        - qemu-char-spice
+        - qemu-device-display-virtio-gpu
+        - qemu-device-display-virtio-vga
+        - qemu-device-usb-redirect
+        - qemu-img
+        - qemu-system-x86-core
+        - qemu-user-binfmt
+        - qemu-user-static
+        - qemu
+        - virt-manager
+        - tailscale
+        - ublue-os-libvirt-workarounds
+        - ublue-os-update-services
+        - ublue-os-signing
+        - ublue-os-luks
+        - ublue-os-just
+        - ublue-bling
+        - ublue-brew
+        - ublue-os-flatpak
+        - ublue-os-media-automount-udev
+        - ublue-os-udev-rules
+        - flatpak-builder
+        - flatpak-spawn
+        - aurora-readymade-config
+    remove:
+      packages:
+        - firefox
+
+  - type: files
+    files:
+      - source: system
+        destination: /
+
+  - type: signing
