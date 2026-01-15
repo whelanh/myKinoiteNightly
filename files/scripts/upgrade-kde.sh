@@ -48,7 +48,6 @@ echo "Downloading packages from COPR..."
 DOWNLOAD_DIR=$(mktemp -d)
 dnf download --disablerepo='*' --enablerepo="$COPR_NAME" \
     --destdir="$DOWNLOAD_DIR" \
-    --arch=x86_64,noarch \
     --exclude='*-debuginfo,*-debugsource' \
     $PACKAGES_TO_REPLACE
 
