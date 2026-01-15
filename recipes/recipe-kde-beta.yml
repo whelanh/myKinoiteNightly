@@ -1,37 +1,40 @@
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
-# image will be published to ghcr.io/<user>/<name>
-name: kinoite-nightly-ublue
-# description will be included in the image's metadata
-description: Kinoite Nightly Rawhide w/Ublue + NVIDIA Drivers
-
-# the base image to build on top of (FROM) and the version tag to use
+name: kinoite-kde-beta
+description: Kinoite Rawhide with KDE Plasma 6.6 Beta (from @kdesig/kde-beta)
 base-image: quay.io/fedora-ostree-desktops/kinoite
-image-version: rawhide # latest is also supported if you want new updates ASAP
+image-version: rawhide # Matching the 'fedora-43' target of the COPR
 
-# module configuration, executed in order
-# you can include multiple instances of the same module
 modules:
   - type: rpm-ostree
+    repos:
+      # The verified KDE Beta COPR (Jan 2026)
+      - https://copr.fedorainfracloud.org/coprs/g/kdesig/kde-beta/repo/fedora-43/group_kdesig-kde-beta-fedora-43.repo
     install:
+      # explicit install to ensure we pull the beta versions
+      # Drivers from original recipe
       - kernel-modules
       - kernel-modules-extra
       - linux-firmware
       - mesa-dri-drivers
       - xorg-x11-drv-nouveau
       - libdrm
-      
+
+  #- type: script
+  #  scripts:
+  #    - upgrade-kde.sh
+
   - type: dnf
     repos:
       copr:
         - atim/starship
-        - ublue-os/packages # ublue-os maintained packages
-        - ryanabx/cosmic-epoch # COSMIC desktop environment
-      # Add Tailscale's official repo because Fedora package is outdated and has a CVE
+        - ublue-os/packages
+        - ryanabx/cosmic-epoch
       files:
         - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
     install:
       packages:
-        - dnf-plugins-core # needed for copr
+        # Original package list
+        - dnf-plugins-core
         - zsh
         - gcc
         - gcc-c++
@@ -41,12 +44,9 @@ modules:
         - htop
         - duf
         - cmake
-        - cairo
+        - cmake
         - cosmic-desktop
         - git
-        - fuse
-        #- fprintd
-        #- fprintd-pam
         - tcl8-devel 
         - tk8-devel 
         - python-pyqt6
@@ -83,17 +83,13 @@ modules:
         - ublue-os-udev-rules
         - flatpak-builder
         - flatpak-spawn
-        #- aurora-readymade-config
     remove:
       packages:
-        # Removing firefox (in favor of the flatpak)
-        # "firefox" is the main package, "firefox-langpacks" is a dependency
         - firefox
-        #- firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
 
   - type: files
     files:
       - source: system
-        destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
+        destination: /
 
-  - type: signing # this sets up the proper policy & signing files for signed images to work fully
+  - type: signing
