@@ -22,6 +22,16 @@ modules:
       - mesa-dri-drivers
       - xorg-x11-drv-nouveau
       - libdrm
+      # Install SDDM instead of experimental plasmalogin
+      - sddm
+      - sddm-breeze
+      - sddm-kcm
+      - sddm-wayland-plasma
+    remove:
+      # Remove experimental plasmalogin that causes black screen
+      - plasma-login-manager
+      - kcm-plasmalogin
+      - kde-settings-plasmalogin
       
   - type: dnf
     repos:
