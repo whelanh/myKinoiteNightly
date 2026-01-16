@@ -23,12 +23,8 @@ modules:
       - xorg-x11-drv-nouveau
       - libdrm
       # Keep plasmalogin (default in kinoite-beta)
-      # The setup-plasmalogin.sh script will create the sddm user that plasmalogin needs
+      # The plasmalogin user config is provided via files module
 
-  - type: script
-    scripts:
-      - setup-plasmalogin.sh
-      
   - type: dnf
     repos:
       copr:
