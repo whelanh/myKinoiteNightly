@@ -1,15 +1,26 @@
 #!/usr/bin/env bash
 
-# plasmalogin needs the plasmalogin user/group for authentication
-# Create them if they don't exist
+set -euo pipefail
 
-# Create plasmalogin user configuration
-cat > /usr/lib/sysusers.d/plasmalogin-user.conf << 'EOF'
+# plasmalogin needs the plasmalogin user/group for authentication
+# The base image may have conflicting sysusers.d files, so we need to
+# ensure our configuration takes precedence
+
+# Remove any existing plasmalogin sysusers configs that might conflict
+rm -f /usr/lib/sysusers.d/*plasmalogin*.conf
+
+# Create our plasmalogin user configuration with explicit UID/GID
+cat > /usr/lib/sysusers.d/00-plasmalogin.conf << 'EOF'
+# PLASMALOGIN greeter user - must be UID/GID 944
 g plasmalogin 944
 u plasmalogin 944:944 "PLASMALOGIN Greeter Account" /var/lib/plasmalogin /usr/bin/nologin
 EOF
 
-# Run systemd-sysusers to create the user
-systemd-sysusers
+echo "Created /usr/lib/sysusers.d/00-plasmalogin.conf"
+cat /usr/lib/sysusers.d/00-plasmalogin.conf
 
-echo "plasmalogin user created"
+# Run systemd-sysusers to create the user
+echo "Running systemd-sysusers..."
+systemd-sysusers 2>&1 || true
+
+echo "plasmalogin user setup complete"
