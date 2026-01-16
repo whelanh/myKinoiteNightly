@@ -28,7 +28,7 @@ modules:
       - sddm-kcm
       - sddm-wayland-plasma
     remove:
-       Remove experimental plasmalogin that causes black screen
+       # Remove experimental plasmalogin that causes black screen
       - plasma-login-manager
       - kcm-plasmalogin
       - kde-settings-plasmalogin
