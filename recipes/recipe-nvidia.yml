@@ -32,6 +32,10 @@ modules:
       - plasma-login-manager
       - kcm-plasmalogin
       - kde-settings-plasmalogin
+
+  - type: script
+    scripts:
+      - enable-sddm.sh
       
   - type: dnf
     repos:
