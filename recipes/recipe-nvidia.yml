@@ -42,7 +42,6 @@ modules:
       copr:
         - atim/starship
         - ublue-os/packages # ublue-os maintained packages
-        - ryanabx/cosmic-epoch # COSMIC desktop environment
       # Add Tailscale's official repo because Fedora package is outdated and has a CVE
       files:
         - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
@@ -58,7 +57,6 @@ modules:
         - htop
         - duf
         - cmake
-        - cosmic-desktop
         - git
         - fprintd
         - fprintd-pam

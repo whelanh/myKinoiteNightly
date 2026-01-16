@@ -28,6 +28,7 @@ jobs:
         recipe:
           # !! Add your recipes here
           - recipe-nvidia.yml
+          - recipe-nvidia-plasmalogin.yml
           #- recipe-cosmic.yml
           #- recipe-asus.yml
     steps:
