@@ -5,8 +5,8 @@ name: kinoite-nightly-ublue
 description: Kinoite Nightly Rawhide w/Ublue + NVIDIA Drivers
 
 # the base image to build on top of (FROM) and the version tag to use
-base-image: quay.io/fedora-ostree-desktops/kinoite
-image-version: rawhide # latest is also supported if you want new updates ASAP
+base-image: quay.io/fedora-ostree-desktops/kinoite-nightly
+image-version: 43 # latest is also supported if you want new updates ASAP
 
 # module configuration, executed in order
 # you can include multiple instances of the same module
@@ -14,7 +14,7 @@ modules:
   - type: rpm-ostree
     repos:
       # The verified KDE Beta COPR (Jan 2026)
-      - https://copr.fedorainfracloud.org/coprs/g/kdesig/kde-beta/repo/fedora-rawhide/group_kdesig-kde-beta-fedora-rawhide.repo
+      - https://copr.fedorainfracloud.org/coprs/g/kdesig/kde-beta/repo/fedora-43/group_kdesig-kde-beta-fedora-43.repo
     install:
       - kernel-modules
       - kernel-modules-extra
@@ -46,8 +46,8 @@ modules:
         - cmake
         - cosmic-desktop
         - git
-        #- fprintd
-        #- fprintd-pam
+        - fprintd
+        - fprintd-pam
         - tcl8-devel 
         - tk8-devel 
         - python-pyqt6
