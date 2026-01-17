@@ -92,15 +92,15 @@ modules:
         - firefox
         #- firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
 
+  - type: files
+    files:
+      - source: system
+        destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
+
   - type: script
     scripts:
       - cleanup-plasmalogin-configs.sh
       - setup-plasmalogin.sh
       - enable-plasmalogin.sh
-
-  - type: files
-    files:
-      - source: system
-        destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully

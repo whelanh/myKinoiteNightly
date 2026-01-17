@@ -1,18 +1,24 @@
 #!/usr/bin/env bash
 set -ex
 
-echo "DEBUG: Starting cleanup-plasmalogin-configs.sh" >> /setup-plasmalogin.log
+LOG="/setup-plasmalogin.log"
+echo "DEBUG: Starting cleanup-plasmalogin-configs.sh" > "$LOG"
 
-# Remove all plasmalogin sysusers configs from base image
-# except our managed one if we had one (but we're moving away from that)
-echo "Removing conflicting plasmalogin sysusers configs..." >> /setup-plasmalogin.log
-find /usr/lib/sysusers.d -name "*plasma-login-manager*" -type f -delete
-find /usr/lib/sysusers.d -name "*plasmalogin*" -type f -delete
+# Identify and log all plasmalogin.conf files before clearing them
+echo "Searching for all plasmalogin.conf files..." >> "$LOG"
+FILES_TO_CLEAN=$(find /etc /usr/etc /usr/lib/sysusers.d /usr/lib/tmpfiles.d -name "*plasmalogin*.conf" 2>/dev/null || true)
 
-# Remove any stray manager configs to ensure we use package defaults 
-# unless we explicitly provide one in /etc later.
-echo "Removing potential manager config conflicts..." >> /setup-plasmalogin.log
-rm -f /etc/plasmalogin.conf
-rm -f /usr/etc/plasmalogin.conf
+for f in $FILES_TO_CLEAN; do
+    echo "--- CONTENT OF $f ---" >> "$LOG"
+    cat "$f" >> "$LOG" || echo "could not read" >> "$LOG"
+    echo "--- END OF $f ---" >> "$LOG"
+done
 
-echo "Cleanup complete" >> /setup-plasmalogin.log
+# Remove all plasmalogin sysusers and manager configs
+echo "Removing conflicting configs..." >> "$LOG"
+for f in $FILES_TO_CLEAN; do
+    rm -f "$f"
+    echo "Deleted $f" >> "$LOG"
+done
+
+echo "Cleanup complete" >> "$LOG"
