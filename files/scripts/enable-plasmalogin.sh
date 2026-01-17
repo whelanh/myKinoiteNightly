@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+set -ex
+
+echo "DEBUG: Starting enable-plasmalogin.sh" >> /setup-plasmalogin.log
 
 # Enable plasmalogin as the display manager
 systemctl enable plasmalogin.service
@@ -8,4 +11,4 @@ if systemctl list-unit-files | grep -q sddm.service; then
     systemctl disable sddm.service 2>/dev/null || true
 fi
 
-echo "plasmalogin has been enabled as the display manager"
+echo "plasmalogin has been enabled as the display manager" >> /setup-plasmalogin.log

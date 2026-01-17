@@ -94,9 +94,9 @@ modules:
 
   - type: script
     scripts:
-      - files/scripts/cleanup-plasmalogin-configs.sh
-      - files/scripts/setup-plasmalogin.sh
-      - files/scripts/enable-plasmalogin.sh
+      - cleanup-plasmalogin-configs.sh
+      - setup-plasmalogin.sh
+      - enable-plasmalogin.sh
 
   - type: files
     files:

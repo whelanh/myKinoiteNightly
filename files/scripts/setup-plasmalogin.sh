@@ -1,29 +1,32 @@
 #!/usr/bin/env bash
+set -ex
 
-set -euo pipefail
+echo "DEBUG: Starting setup-plasmalogin.sh" > /setup-plasmalogin.log
 
-# plasmalogin needs the plasmalogin user/group for authentication
-# The base image may have conflicting sysusers.d files, so we need to
-# ensure our configuration takes precedence
+# Ensure plasmalogin user is in /etc/passwd and /etc/shadow for PAM support
+# We extract the info from the system (even if it's currently only in /usr/lib/passwd)
+# and force it into the /etc files that PAM modules like pam_unix expect.
 
-# Remove any existing plasmalogin sysusers configs that might conflict
-rm -f /usr/lib/sysusers.d/*plasmalogin*.conf
+TARGET_USER="plasmalogin"
+USER_INFO=$(getent passwd "$TARGET_USER" || true)
 
-# Extract the existing plasmalogin user info if it exists (e.g. from /usr/lib/passwd)
-# and ensure it's in /etc/passwd and /etc/shadow so PAM can find it.
-# This fixes "Authentication service cannot retrieve authentication info".
-
-echo "DEBUG: Running setup-plasmalogin.sh" > /setup-plasmalogin.log
-
-echo "Ensuring plasmalogin user is in /etc/passwd and /etc/shadow..."
-if ! grep -q "^plasmalogin:" /etc/passwd; then
-    echo "Adding plasmalogin to /etc/passwd" >> /setup-plasmalogin.log
-    getent passwd plasmalogin >> /etc/passwd || echo "plasmalogin:x:967:967:PLASMALOGIN Greeter Account:/var/lib/plasmalogin:/sbin/nologin" >> /etc/passwd
+if [ -z "$USER_INFO" ]; then
+    echo "Warning: $TARGET_USER info not found via getent, using defaults." >> /setup-plasmalogin.log
+    USER_INFO="plasmalogin:x:967:967:PLASMALOGIN Greeter Account:/var/lib/plasmalogin:/sbin/nologin"
 fi
 
-if ! grep -q "^plasmalogin:" /etc/shadow; then
-    echo "Adding plasmalogin to /etc/shadow" >> /setup-plasmalogin.log
-    echo "plasmalogin:!!:0:0:99999:7:::" >> /etc/shadow
+echo "Adding $TARGET_USER to /etc/passwd if missing" >> /setup-plasmalogin.log
+if ! grep -q "^$TARGET_USER:" /etc/passwd; then
+  echo "$USER_INFO" >> /etc/passwd
+  echo "Successfully added to /etc/passwd" >> /setup-plasmalogin.log
+fi
+
+echo "Adding $TARGET_USER to /etc/shadow if missing" >> /setup-plasmalogin.log
+if ! grep -q "^$TARGET_USER:" /etc/shadow; then
+  # UID:password:lastchanged:min:max:warn:inactive:expire:reserved
+  # '!!' means no password set (standard for service accounts)
+  echo "$TARGET_USER:!!:0:0:99999:7:::" >> /etc/shadow
+  echo "Successfully added to /etc/shadow" >> /setup-plasmalogin.log
 fi
 
 # Ensure home directory exists and has correct permissions
@@ -32,7 +35,12 @@ chown -R plasmalogin:plasmalogin /var/lib/plasmalogin
 chmod 700 /var/lib/plasmalogin
 
 # Ensure user is in necessary groups for graphics access
-# Note: usermod might fail during build if /etc/group is locked or incomplete
-usermod -aG video,render plasmalogin || true
+# These often need to be in /etc/group as well for standard lookup
+for group in video render; do
+  if getent group "$group" > /dev/null; then
+    usermod -aG "$group" "$TARGET_USER" || true
+    echo "Added $TARGET_USER to $group group" >> /setup-plasmalogin.log
+  fi
+done
 
-echo "plasmalogin user setup and PAM integration complete" >> /setup-plasmalogin.log
+echo "setup-plasmalogin.sh completed" >> /setup-plasmalogin.log
