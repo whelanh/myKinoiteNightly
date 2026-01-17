@@ -13,12 +13,16 @@ rm -f /usr/lib/sysusers.d/*plasmalogin*.conf
 # and ensure it's in /etc/passwd and /etc/shadow so PAM can find it.
 # This fixes "Authentication service cannot retrieve authentication info".
 
+echo "DEBUG: Running setup-plasmalogin.sh" > /setup-plasmalogin.log
+
 echo "Ensuring plasmalogin user is in /etc/passwd and /etc/shadow..."
 if ! grep -q "^plasmalogin:" /etc/passwd; then
+    echo "Adding plasmalogin to /etc/passwd" >> /setup-plasmalogin.log
     getent passwd plasmalogin >> /etc/passwd || echo "plasmalogin:x:967:967:PLASMALOGIN Greeter Account:/var/lib/plasmalogin:/sbin/nologin" >> /etc/passwd
 fi
 
 if ! grep -q "^plasmalogin:" /etc/shadow; then
+    echo "Adding plasmalogin to /etc/shadow" >> /setup-plasmalogin.log
     echo "plasmalogin:!!:0:0:99999:7:::" >> /etc/shadow
 fi
 
@@ -28,6 +32,7 @@ chown -R plasmalogin:plasmalogin /var/lib/plasmalogin
 chmod 700 /var/lib/plasmalogin
 
 # Ensure user is in necessary groups for graphics access
+# Note: usermod might fail during build if /etc/group is locked or incomplete
 usermod -aG video,render plasmalogin || true
 
-echo "plasmalogin user setup and PAM integration complete"
+echo "plasmalogin user setup and PAM integration complete" >> /setup-plasmalogin.log
