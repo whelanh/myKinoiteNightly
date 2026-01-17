@@ -13,7 +13,7 @@ rm -f /usr/lib/sysusers.d/*plasmalogin*.conf
 cat > /usr/lib/sysusers.d/00-plasmalogin.conf << 'EOF'
 # PLASMALOGIN greeter user - must be UID/GID 944
 g plasmalogin 944
-u plasmalogin 944:944 "PLASMALOGIN Greeter Account" /var/lib/plasmalogin /usr/bin/nologin
+u plasmalogin 944:944 "PLASMALOGIN Greeter Account" /var/lib/plasmalogin /sbin/nologin
 EOF
 
 echo "Created /usr/lib/sysusers.d/00-plasmalogin.conf"
