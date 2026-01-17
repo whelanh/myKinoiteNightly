@@ -5,56 +5,40 @@ LOG="/setup-plasmalogin.log"
 echo "DEBUG: Starting setup-plasmalogin.sh" >> "$LOG"
 
 TARGET_USER="plasmalogin"
-USER_INFO=$(getent passwd "$TARGET_USER" || true)
 
-if [ -z "$USER_INFO" ]; then
-    echo "Warning: $TARGET_USER info not found via getent, using defaults." >> "$LOG"
-    USER_INFO="plasmalogin:x:967:967:PLASMALOGIN Greeter Account:/var/lib/plasmalogin:/sbin/nologin"
+# Ensure the user is "unlocked" and has an entry in the shadow file.
+# We use usermod/chpasswd because they handle the backend databases correctly.
+echo "Ensuring $TARGET_USER is unlocked and present in shadow..." >> "$LOG"
+
+# 1. Force add to /etc/passwd if getent fails
+if ! getent passwd "$TARGET_USER" > /dev/null; then
+    echo "Adding $TARGET_USER to passwd defaults" >> "$LOG"
+    echo "plasmalogin:x:967:967:PLASMALOGIN Greeter Account:/var/lib/plasmalogin:/usr/sbin/nologin" >> /etc/passwd
 fi
 
-# Dual Injection Strategy
-for base in /etc /usr/etc; do
-  if [ -d "$base" ]; then
-    echo "Processing $base/passwd and $base/shadow" >> "$LOG"
-    
-    # passwd
-    if ! grep -q "^$TARGET_USER:" "$base/passwd" 2>/dev/null; then
-      echo "$USER_INFO" >> "$base/passwd"
-      echo "Added to $base/passwd" >> "$LOG"
-    else
-      echo "Already in $base/passwd" >> "$LOG"
-    fi
-    
-    # shadow
-    if [ -f "$base/shadow" ]; then
-      if ! grep -q "^$TARGET_USER:" "$base/shadow"; then
-        echo "$TARGET_USER:!!:0:0:99999:7:::" >> "$base/shadow"
-        echo "Added to $base/shadow" >> "$LOG"
-      else
-        echo "Already in $base/shadow" >> "$LOG"
-      fi
-    fi
-  fi
-done
+# 2. Force add to /etc/shadow if missing or locked
+# Setting the password to '!!' (locked but exists) is typical for service accounts
+if ! getent shadow "$TARGET_USER" > /dev/null; then
+    echo "Injecting $TARGET_USER into /etc/shadow" >> "$LOG"
+    echo "plasmalogin:!!:0:0:99999:7:::" >> /etc/shadow
+fi
 
-# Diagnostic Dumps
-for f in /etc/passwd /etc/shadow /usr/etc/passwd /usr/etc/shadow; do
-  if [ -f "$f" ]; then
-    echo "--- TAIL OF $f ---" >> "$LOG"
-    tail -n 5 "$f" >> "$LOG"
-  fi
-done
+# 3. Ensure home directory and permissions
+mkdir -p /var/lib/plasmalogin
+chown -R plasmalogin:plasmalogin /var/lib/plasmalogin
+chmod 700 /var/lib/plasmalogin
 
-# PAM Inspection
-echo "Inspecting PAM configuration..." >> "$LOG"
-find /etc/pam.d /usr/lib/pam.d -name "plasmalogin" -exec echo "--- {} ---" \; -exec cat {} \; -exec echo "--- END ---" \; >> "$LOG" 2>/dev/null || true
-
-# Group Membership
+# 4. Group memberships
 for group in video render; do
   if getent group "$group" > /dev/null; then
     usermod -aG "$group" "$TARGET_USER" || true
-    echo "Processed $TARGET_USER in $group group" >> "$LOG"
+    echo "Verified $TARGET_USER in $group group" >> "$LOG"
   fi
 done
+
+# Diagnostic check
+echo "--- FINAL CHECK ---" >> "$LOG"
+getent passwd "$TARGET_USER" >> "$LOG"
+getent shadow "$TARGET_USER" >> "$LOG" || echo "SHADOW ENTRY STILL MISSING" >> "$LOG"
 
 echo "setup-plasmalogin.sh completed" >> "$LOG"
