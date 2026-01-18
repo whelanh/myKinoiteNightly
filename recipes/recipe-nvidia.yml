@@ -27,11 +27,11 @@ modules:
       - sddm-breeze
       - sddm-kcm
       - sddm-wayland-plasma
-    remove:
-       # Remove experimental plasmalogin that causes black screen
-      - plasma-login-manager
-      - kcm-plasmalogin
-      - kde-settings-plasmalogin
+    #remove:
+    #   # Remove experimental plasmalogin that causes black screen
+    #  - plasma-login-manager
+    #  - kcm-plasmalogin
+    #  - kde-settings-plasmalogin
 
   - type: script
     scripts:
@@ -96,7 +96,7 @@ modules:
         - ublue-os-udev-rules
         - flatpak-builder
         - flatpak-spawn
-        #- aurora-readymade-config
+
     remove:
       packages:
         # Removing firefox (in favor of the flatpak)
