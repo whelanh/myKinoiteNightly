@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# /etc/plasmalogin/wayland-session
+
+echo "DEBUG: Starting wayland-session wrapper" >> /var/tmp/plasmalogin-session.log
+echo "Arguments: $@" >> /var/tmp/plasmalogin-session.log
+echo "User: $(id)" >> /var/tmp/plasmalogin-session.log
+echo "Environment:" >> /var/tmp/plasmalogin-session.log
+env >> /var/tmp/plasmalogin-session.log
+
+# Ensure we have a valid Wayland environment
+export XDG_SESSION_TYPE=wayland
+export XDG_CURRENT_DESKTOP=KDE
+
+# Execute the actual session command
+exec "$@" 2>> /var/tmp/plasmalogin-session.log

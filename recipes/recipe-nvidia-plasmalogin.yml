@@ -22,6 +22,8 @@ modules:
       - mesa-dri-drivers
       - xorg-x11-drv-nouveau
       - libdrm
+      - mesa-va-drivers
+      - mesa-vdpau-drivers
       # Keep plasmalogin (default in kinoite-beta)
       # The plasmalogin user config is provided via files module
 

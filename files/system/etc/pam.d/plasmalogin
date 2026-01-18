@@ -3,6 +3,7 @@ auth     [success=done ignore=ignore default=bad] pam_selinux_permit.so
 auth     required      pam_permit.so
 auth     include       postlogin
 
+account  sufficient    pam_permit.so
 account  required      pam_nologin.so
 account  include       password-auth
 
