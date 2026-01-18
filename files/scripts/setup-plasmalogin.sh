@@ -12,22 +12,7 @@ mkdir -p /var/lib/plasmalogin
 chown -R 967:967 /var/lib/plasmalogin
 chmod 700 /var/lib/plasmalogin
 
-# Set permissions for session scripts
-if [ -f /etc/plasmalogin/wayland-session ]; then
-    chmod +x /etc/plasmalogin/wayland-session
-    echo "Set +x on /etc/plasmalogin/wayland-session" >> "$LOG"
-fi
-
-# Ensure /var/tmp is writable for logging
-chmod 1777 /var/tmp
-touch /var/tmp/plasmalogin-session.log
-chmod 666 /var/tmp/plasmalogin-session.log # Ensure anyone can write to the log for now
-
-# Ensure DRI/GPU access nodes have correct permissions just in case
-chmod 666 /dev/dri/card* /dev/dri/renderD* || true
-
 # Ensure user is in necessary groups for graphics access
-# Note: we use the GID/UID directly just in case the name lookup is flaky
 for group in video render; do
   if getent group "$group" > /dev/null; then
     usermod -aG "$group" "$TARGET_USER" || true

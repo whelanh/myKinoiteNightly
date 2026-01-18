@@ -23,6 +23,8 @@ modules:
       - xorg-x11-drv-nouveau
       - libdrm
       - mesa-va-drivers
+      - plasma-wayland-session
+      - kcm-plasmalogin
       # Keep plasmalogin (default in kinoite-beta)
       # The plasmalogin user config is provided via files module
 
