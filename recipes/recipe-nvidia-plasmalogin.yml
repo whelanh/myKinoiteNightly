@@ -22,9 +22,9 @@ modules:
       - mesa-dri-drivers
       - xorg-x11-drv-nouveau
       - libdrm
-      - mesa-va-drivers
-      - plasma-workspace-wayland
-      - kcm-plasmalogin
+      #- mesa-va-drivers
+      #- plasma-workspace-wayland
+      #- kcm-plasmalogin
       # Keep plasmalogin (default in kinoite-beta)
       # The plasmalogin user config is provided via files module
 
@@ -100,10 +100,10 @@ modules:
       - source: system
         destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
 
-  - type: script
-    scripts:
-      - cleanup-plasmalogin-configs.sh
-      - setup-plasmalogin.sh
-      - enable-plasmalogin.sh
+  #- type: script
+  #  scripts:
+  #    - cleanup-plasmalogin-configs.sh
+  #    - setup-plasmalogin.sh
+  #    - enable-plasmalogin.sh
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
