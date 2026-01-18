@@ -1,15 +1,24 @@
 #!/usr/bin/env bash
 # /etc/plasmalogin/wayland-session
 
-echo "DEBUG: Starting wayland-session wrapper" >> /var/tmp/plasmalogin-session.log
-echo "Arguments: $@" >> /var/tmp/plasmalogin-session.log
-echo "User: $(id)" >> /var/tmp/plasmalogin-session.log
-echo "Environment:" >> /var/tmp/plasmalogin-session.log
-env >> /var/tmp/plasmalogin-session.log
+LOG="/var/tmp/plasmalogin-session.log"
+echo "DEBUG: Starting wayland-session wrapper" >> "$LOG"
+echo "Arguments: $@" >> "$LOG"
+echo "User: $(id)" >> "$LOG"
+echo "Environment at start:" >> "$LOG"
+env >> "$LOG"
 
-# Ensure we have a valid Wayland environment
+# Force Wayland and KDE specific variables
 export XDG_SESSION_TYPE=wayland
 export XDG_CURRENT_DESKTOP=KDE
+export QT_QPA_PLATFORM=wayland
+export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+export KWIN_DRM_DEVICES="/dev/dri/card0" # Common for primary GPU
 
-# Execute the actual session command
-exec "$@" 2>> /var/tmp/plasmalogin-session.log
+# Log hardware info
+echo "DRI devices:" >> "$LOG"
+ls -l /dev/dri >> "$LOG"
+
+# Execute the actual session command, capturing BOTH stdout and stderr
+echo "Starting session executable: $@" >> "$LOG"
+exec "$@" >> "$LOG" 2>&1

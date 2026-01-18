@@ -21,7 +21,10 @@ fi
 # Ensure /var/tmp is writable for logging
 chmod 1777 /var/tmp
 touch /var/tmp/plasmalogin-session.log
-chown 967:967 /var/tmp/plasmalogin-session.log
+chmod 666 /var/tmp/plasmalogin-session.log # Ensure anyone can write to the log for now
+
+# Ensure DRI/GPU access nodes have correct permissions just in case
+chmod 666 /dev/dri/card* /dev/dri/renderD* || true
 
 # Ensure user is in necessary groups for graphics access
 # Note: we use the GID/UID directly just in case the name lookup is flaky
