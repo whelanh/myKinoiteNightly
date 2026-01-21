@@ -59,7 +59,7 @@ update VERB_LEVEL="full":
 
       # Run rpm-ostree update
       update_command "sudo bootc upgrade"
-      update_command "rpm-ostree db diff"
+
 
       # Run flatpak update
       update_command "sudo flatpak update -y"
@@ -72,6 +72,9 @@ update VERB_LEVEL="full":
           update_command "brew update"
           update_command "brew upgrade"
       fi
+
+      # Run rpm-ostree update to see db diff
+      update_command "rpm-ostree db diff"
 
     fi
 
