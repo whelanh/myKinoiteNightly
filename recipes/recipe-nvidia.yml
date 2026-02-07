@@ -60,6 +60,7 @@ modules:
         - duf
         - cmake
         - git
+        - fuse
         - fprintd
         - fprintd-pam
         - tcl8-devel 
