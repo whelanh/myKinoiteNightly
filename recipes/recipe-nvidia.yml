@@ -35,7 +35,7 @@ modules:
 
   - type: script
     scripts:
-      - enable-sddm.sh
+      #- enable-sddm.sh
       - add-antigravity-repo.sh
     
   - type: dnf
