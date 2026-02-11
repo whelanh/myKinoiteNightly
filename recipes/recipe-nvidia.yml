@@ -50,7 +50,6 @@ modules:
       packages:
         - mesa-libOpenCL  # support for AMD GPU dev
         - mesa-libOpenCL-devel # support for AMD GPU dev
-        - ocl-icd-devel # support for AMD GPU dev
         - antigravity
         - dnf-plugins-core # needed for copr
         - zsh
