@@ -48,8 +48,17 @@ modules:
         - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
     install:
       packages:
-        - mesa-libOpenCL  # support for AMD GPU dev
-        - mesa-libOpenCL-devel # support for AMD GPU dev
+        - rocm-core
+        - rocm-opencl
+        - rocm-device-libs
+        - rocm-utils
+        - rocm-smi
+        - rocm-llvm
+        - rocm-cblas
+        - rocm-blas
+        - rocm-hip
+        - rocm-hip-runtime
+        - rocm-hip-runtime-dev
         - antigravity
         - dnf-plugins-core # needed for copr
         - zsh
