@@ -48,15 +48,6 @@ modules:
         - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
     install:
       packages:
-        - rocm-core
-        - rocm-runtime
-        - rocm-filesystem
-        - rocm-smi
-        - rocm-clinfo
-        - rocm-clang
-        - rocm-cmake
-        - rocm-omp
-        - onnxruntime-rocm
         - antigravity
         - dnf-plugins-core # needed for copr
         - zsh
