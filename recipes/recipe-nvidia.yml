@@ -49,16 +49,14 @@ modules:
     install:
       packages:
         - rocm-core
-        - rocm-opencl
-        - rocm-device-libs
-        - rocm-utils
+        - rocm-runtime
+        - rocm-filesystem
         - rocm-smi
-        - rocm-llvm
-        - rocm-cblas
-        - rocm-blas
-        - rocm-hip
-        - rocm-hip-runtime
-        - rocm-hip-runtime-dev
+        - rocm-clinfo
+        - rocm-clang
+        - rocm-cmake
+        - rocm-omp
+        - onnxruntime-rocm
         - antigravity
         - dnf-plugins-core # needed for copr
         - zsh
