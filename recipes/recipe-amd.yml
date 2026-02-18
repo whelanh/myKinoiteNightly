@@ -82,7 +82,7 @@ modules:
         - ublue-brew
         - ublue-os-flatpak
         - ublue-os-media-automount-udev
-        - ublue-os-udev-rules
+        #- ublue-os-udev-rules
         - flatpak-builder
         - flatpak-spawn
 
