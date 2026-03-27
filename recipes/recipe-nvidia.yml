@@ -51,6 +51,8 @@ modules:
         - fprintd-pam
         - tcl8-devel 
         - tk8-devel 
+        - tcl-devel
+        - tk-devel
         - python-pyqt6
         - python-pyqt6-webengine
         - edk2-ovmf
