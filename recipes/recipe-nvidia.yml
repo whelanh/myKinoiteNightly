@@ -49,8 +49,8 @@ modules:
         - fuse
         - fprintd
         - fprintd-pam
-        - tcl8-devel 
-        - tk8-devel 
+        #- tcl8-devel 
+        #- tk8-devel 
         - tcl-devel
         - tk-devel
         - python-pyqt6
