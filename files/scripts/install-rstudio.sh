@@ -4,12 +4,15 @@ set -ouex pipefail
 # Import Posit's GPG signing key
 rpm --import https://cdn.posit.co/signing-key/posit-signing-key-public.asc
 
-# Download RStudio daily build directly from Posit's S3 bucket
-curl -fL -o /tmp/rstudio.rpm \
-  "https://s3.amazonaws.com/rstudio-ide-build/electron/rhel9/x86_64/rstudio-2026.04.0-daily-465-x86_64.rpm"
+# Get the latest RStudio daily build URL for RHEL9 x86_64
+RSTUDIO_URL=$(curl -fsSL "https://dailies.rstudio.com/rstudio/latest/index.json" | \
+  python3 -c "import sys,json; d=json.load(sys.stdin); print(d['products']['electron']['platforms']['rhel9-x86_64']['link'])")
+
+# Download RStudio daily build
+curl -fL -o /tmp/rstudio.rpm "$RSTUDIO_URL"
 
 # Install it
-rpm-ostree install /tmp/rstudio.rpm
+dnf install -y /tmp/rstudio.rpm
 
 # Clean up
 rm -f /tmp/rstudio.rpm
