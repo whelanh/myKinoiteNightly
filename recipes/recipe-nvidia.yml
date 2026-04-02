@@ -28,6 +28,7 @@ modules:
     repos:
       copr:
         - atim/starship
+        - iucar/rstudio
         - ublue-os/packages # ublue-os maintained packages
       # Add Tailscale's official repo because Fedora package is outdated and has a CVE
       files:
@@ -36,6 +37,8 @@ modules:
       packages:
         - antigravity
         - dnf-plugins-core # needed for copr
+        - R
+        - rstudio-desktop
         - zsh
         - gcc
         - gcc-c++
