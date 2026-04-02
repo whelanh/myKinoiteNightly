@@ -19,11 +19,11 @@ modules:
       - mesa-dri-drivers
       - xorg-x11-drv-nouveau
       - libdrm
-      - https://dailies.rstudio.com/version/2026.04.0-daily+465
 
   - type: script
     scripts:
       - add-antigravity-repo.sh
+      - install-rstudio.sh
     
   - type: dnf
     repos:
@@ -50,8 +50,7 @@ modules:
         - fuse
         - fprintd
         - fprintd-pam
-        #- tcl8-devel 
-        #- tk8-devel 
+        - R
         - tcl-devel
         - tk-devel
         - python-pyqt6
