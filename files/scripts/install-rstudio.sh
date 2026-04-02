@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -ouex pipefail
+
+# Get the latest RStudio daily build direct download URL from Posit's JSON API
+RSTUDIO_URL=$(curl -s https://dailies.rstudio.com/rstudio/latest/index.json | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+print(data['products']['electron']['platforms']['rhel9-x86_64']['link'])
+")
 
 # Download RStudio daily build
-curl -L -o /tmp/rstudio.rpm "https://drive.google.com/uc?export=download&id=1VLdMwfsxMCcQ93NSXhOY2iRUlBUs36l5&confirm=t"
+curl -fL -o /tmp/rstudio.rpm "${RSTUDIO_URL}"
 
 # Install it
 rpm-ostree install /tmp/rstudio.rpm
