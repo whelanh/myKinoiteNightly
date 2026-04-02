@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Download RStudio daily build
-curl -L -o /tmp/rstudio.rpm "https://drive.google.com/file/d/1VLdMwfsxMCcQ93NSXhOY2iRUlBUs36l5/view?usp=sharing"
+curl -L -o /tmp/rstudio.rpm "https://drive.google.com/uc?export=download&id=1VLdMwfsxMCcQ93NSXhOY2iRUlBUs36l5&confirm=t"
 
 # Install it
 rpm-ostree install /tmp/rstudio.rpm
