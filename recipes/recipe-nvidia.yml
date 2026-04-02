@@ -23,7 +23,6 @@ modules:
   - type: script
     scripts:
       - add-antigravity-repo.sh
-      - install-rstudio.sh
     
   - type: dnf
     repos:
@@ -93,6 +92,10 @@ modules:
         # "firefox" is the main package, "firefox-langpacks" is a dependency
         - firefox
         #- firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
+
+  - type: script
+    scripts:
+      - install-rstudio.sh
 
   - type: files
     files:
