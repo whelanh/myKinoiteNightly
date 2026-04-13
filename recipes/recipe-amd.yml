@@ -11,13 +11,17 @@ image-version: 44 # latest is also supported if you want new updates ASAP
 # module configuration, executed in order
 # you can include multiple instances of the same module
 modules:
+  # Disable the fedora-cisco-openh264 repo (causes build failures, not needed with Flatpak Firefox)
+  - type: script
+    scripts:
+      - disable-openh264-repo.sh
+
   - type: rpm-ostree
     install:
       - kernel-modules
       - kernel-modules-extra
       - linux-firmware
-      #- mesa-dri-drivers
-      #- xorg-x11-drv-nouveau
+      - mesa-dri-drivers
       - libdrm
 
   - type: script
@@ -49,8 +53,9 @@ modules:
         - fuse
         - fprintd
         - fprintd-pam
-        - tcl8-devel 
-        - tk8-devel
+        - R
+        - tcl-devel
+        - tk-devel
         - python-pyqt6
         - python-pyqt6-webengine
         - edk2-ovmf
@@ -80,9 +85,8 @@ modules:
         - ublue-os-just
         - ublue-bling
         - ublue-brew
-        #- ublue-os-flatpak
         - ublue-os-media-automount-udev
-        #- ublue-os-udev-rules
+        - ublue-os-udev-rules
         - flatpak-builder
         - flatpak-spawn
 
@@ -92,6 +96,10 @@ modules:
         # "firefox" is the main package, "firefox-langpacks" is a dependency
         - firefox
         #- firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
+
+  - type: script
+    scripts:
+      - install-rstudio.sh
 
   - type: files
     files:

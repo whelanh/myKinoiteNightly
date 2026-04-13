@@ -15,14 +15,13 @@ modules:
   - type: script
     scripts:
       - disable-openh264-repo.sh
-      
+
   - type: rpm-ostree
     install:
       - kernel-modules
       - kernel-modules-extra
       - linux-firmware
       - mesa-dri-drivers
-      - xorg-x11-drv-nouveau
       - libdrm
 
   - type: script
