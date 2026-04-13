@@ -13,8 +13,8 @@ image-version: 45 # latest is also supported if you want new updates ASAP
 modules:
   # Disable the fedora-cisco-openh264 repo (causes build failures, not needed with Flatpak Firefox)
   - type: script
-    snippets:
-      - "rpm-ostree ex setopt fedora-cisco-openh264.enabled=0"
+    scripts:
+      - disable-openh264-repo.sh
       
   - type: rpm-ostree
     install:
