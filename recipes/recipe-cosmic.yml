@@ -1,35 +1,44 @@
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 # image will be published to ghcr.io/<user>/<name>
-name: cosmic-latest-ublue
+name: cosmic-nightly-ublue
 # description will be included in the image's metadata
-description: Cosmic w/Ublue + NVIDIA Drivers
+description: Kinoite Nightly Rawhide w/Ublue + NVIDIA Drivers
 
 # the base image to build on top of (FROM) and the version tag to use
 base-image: quay.io/fedora-ostree-desktops/cosmic-atomic
-image-version: rawhide # use specific version tag (41, 42, 43, or rawhide)
+image-version: rawhide # latest is also supported if you want new updates ASAP
 
 # module configuration, executed in order
 # you can include multiple instances of the same module
 modules:
+  # Disable the fedora-cisco-openh264 repo (causes build failures, not needed with Flatpak Firefox)
+  - type: script
+    scripts:
+      - disable-openh264-repo.sh
+
   - type: rpm-ostree
     install:
       - kernel-modules
       - kernel-modules-extra
       - linux-firmware
       - mesa-dri-drivers
-      - xorg-x11-drv-nouveau
       - libdrm
 
+  - type: script
+    scripts:
+      - add-antigravity-repo.sh
+    
   - type: dnf
     repos:
       copr:
         - atim/starship
-        - ublue-os/packages # ublue-os maintained packages  
+        - ublue-os/packages # ublue-os maintained packages
       # Add Tailscale's official repo because Fedora package is outdated and has a CVE
       files:
-        - https://pkgs.tailscale.com/stable/fedora/tailscale.repo        
+        - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
     install:
       packages:
+        - antigravity
         - dnf-plugins-core # needed for copr
         - zsh
         - gcc
@@ -40,13 +49,13 @@ modules:
         - htop
         - duf
         - cmake
-        - cairo
         - git
         - fuse
-        - fprintd  # For Thinkpad fingerprint reader
+        - fprintd
         - fprintd-pam
-        - tcl8-devel 
-        - tk8-devel 
+        - R
+        - tcl-devel
+        - tk-devel
         - python-pyqt6
         - python-pyqt6-webengine
         - edk2-ovmf
@@ -76,13 +85,21 @@ modules:
         - ublue-os-just
         - ublue-bling
         - ublue-brew
-        - aurora-readymade-config
+        - ublue-os-media-automount-udev
+        - ublue-os-udev-rules
+        - flatpak-builder
+        - flatpak-spawn
+
     remove:
       packages:
         # Removing firefox (in favor of the flatpak)
         # "firefox" is the main package, "firefox-langpacks" is a dependency
         - firefox
-        #- firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)  
+        #- firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
+
+  - type: script
+    scripts:
+      - install-rstudio.sh
 
   - type: files
     files:

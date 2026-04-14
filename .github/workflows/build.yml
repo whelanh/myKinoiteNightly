@@ -28,7 +28,7 @@ jobs:
         recipe:
           # !! Add your recipes here
           - recipe-nvidia.yml
-          - recipe-budgie.yml
+          - recipe-cosmic.yml
           #- recipe-amd.yml
           #- recipe-asus.yml
     steps:
