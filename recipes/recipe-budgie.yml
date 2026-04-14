@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 # image will be published to ghcr.io/<user>/<name>
-name: kinoite-nightly-ublue
+name: budgie-nightly-ublue
 # description will be included in the image's metadata
 description: Kinoite Nightly Rawhide w/Ublue + NVIDIA Drivers
 
