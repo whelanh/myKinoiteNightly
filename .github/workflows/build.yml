@@ -28,8 +28,8 @@ jobs:
         recipe:
           # !! Add your recipes here
           - recipe-nvidia.yml
-          - recipe-amd.yml
-          #- recipe-cosmic.yml
+          - recipe-budgie.yml
+          #- recipe-amd.yml
           #- recipe-asus.yml
     steps:
       # the build is fully handled by the reusable github action
