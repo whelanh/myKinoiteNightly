@@ -58,6 +58,7 @@ modules:
         - R
         - libcurl-devel
         - libuv-devel
+        - libxml2-devel
         - tcl-devel
         - tk-devel
         - python-pyqt6
