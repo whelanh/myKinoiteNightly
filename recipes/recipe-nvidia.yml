@@ -54,6 +54,8 @@ modules:
         - fprintd
         - fprintd-pam
         - R
+        - libcurl-devel
+        - libuv-devel
         - tcl-devel
         - tk-devel
         - python-pyqt6
