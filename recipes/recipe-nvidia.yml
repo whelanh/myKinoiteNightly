@@ -59,6 +59,8 @@ modules:
         - libcurl-devel
         - libuv-devel
         - libxml2-devel
+        - fribidi-devel
+        - pandoc
         - tcl-devel
         - tk-devel
         - python-pyqt6
