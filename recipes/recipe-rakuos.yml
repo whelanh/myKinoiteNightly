@@ -1,0 +1,152 @@
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+# image will be published to ghcr.io/<user>/<name>
+name: kinoite-nightly-ublue-rakuos
+# description will be included in the image's metadata
+description: Kinoite Nightly Rawhide w/Ublue + NVIDIA Drivers + RakuOS Overlay System
+
+# the base image to build on top of (FROM) and the version tag to use
+base-image: quay.io/fedora-ostree-desktops/kinoite
+image-version: rawhide # latest is also supported if you want new updates ASAP
+
+# module configuration, executed in order
+# you can include multiple instances of the same module
+modules:
+  # Disable the fedora-cisco-openh264 repo (causes build failures, not needed with Flatpak Firefox)
+  - type: script
+    scripts:
+      - disable-openh264-repo.sh
+
+  - type: rpm-ostree
+    install:
+      - kernel-modules
+      - kernel-modules-extra
+      - linux-firmware
+      - mesa-dri-drivers
+      - libdrm
+
+  - type: script
+    scripts:
+      - add-antigravity-repo.sh
+
+  - type: dnf
+    repos:
+      copr:
+        - atim/starship
+        - ublue-os/packages # ublue-os maintained packages
+        - ryanabx/cosmic-epoch
+        - tohur/RakuOS
+      # Add Tailscale's official repo because Fedora package is outdated and has a CVE
+      files:
+        - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+    install:
+      packages:
+        - rakuos-welcome
+        - rakuos-software
+        - antigravity
+        - dnf-plugins-core # needed for cop r
+        - zsh
+        - gcc
+        - gcc-c++
+        - gcc-gfortran
+        - make
+        - fastfetch
+        - htop
+        - duf
+        - cmake
+        - git
+        - fuse
+        - fprintd
+        - fprintd-pam
+        - cosmic-desktop
+        - R
+        - libcurl-devel
+        - libuv-devel
+        - libxml2-devel
+        - fribidi-devel
+        - pandoc
+        - tcl-devel
+        - tk-devel
+        - python-pyqt6
+        - python-pyqt6-webengine
+        - edk2-ovmf
+        - libvirt
+        - libvirt-nss
+        - onedrive
+        - PackageKit
+        - docker
+        - distrobox
+        - podman-compose
+        - podman-machine
+        - qemu-char-spice
+        - qemu-device-display-virtio-gpu
+        - qemu-device-display-virtio-vga
+        - qemu-device-usb-redirect
+        - qemu-img
+        - qemu-system-x86-core
+        - qemu-user-binfmt
+        - qemu-user-static
+        - qemu
+        - virt-manager
+        - tailscale
+        - ublue-os-libvirt-workarounds
+        - ublue-os-update-services
+        - ublue-os-signing
+        - ublue-os-luks
+        - ublue-os-just
+        - ublue-bling
+        - ublue-brew
+        - ublue-os-media-automount-udev
+        - ublue-os-udev-rules
+        - flatpak-builder
+        - flatpak-spawn
+
+    remove:
+      packages:
+        # Removing firefox (in favor of the flatpak)
+        # "firefox" is the main package, "firefox-langpacks" is a dependency
+        - firefox
+        - xwaylandvideobridge
+        #- firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
+
+  - type: script
+    scripts:
+      - install-rstudio.sh
+
+  - type: files
+    files:
+      - source: system
+        destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
+
+  # === RakuOS Overlay System Additions ===
+  # Create protected packages template (customize this based on your base image)
+  - type: script
+    scripts:
+      - mkdir -p /usr/share/rakuos
+      - |
+        cat > /usr/share/rakuos/protected-packages.txt << 'EOF'
+        # Add your protected packages here - these are packages from the base image
+        # that should not be overridden by the overlay
+        # For Kinoite/Cosmic Desktop, typically includes:
+        cosmic-session
+        cosmic-panel
+        cosmic-applets
+        # Add other core system packages as needed based on your base image
+        # You can examine a running Kinoite system to see what to protect
+        EOF
+
+  # Generate RakuOS base manifests and configuration
+  - type: script
+    scripts:
+      - /usr/libexec/rakuos/generate-base-manifest
+
+  # Enable RakuOS overlay services
+  - type: script
+    scripts:
+      - systemctl enable rakuos-overlay-mount.service
+      - systemctl enable rakuos-overlay-sync.service
+      - systemctl enable rakuos-overlay-services.service
+      - systemctl enable rakuos-base-protect.service
+      - systemctl enable --global rakuos-user.service
+
+  # Set up the proper policy & signing files for signed images to work fully
+  - type: signing

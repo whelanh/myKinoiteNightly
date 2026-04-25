@@ -1,0 +1,12 @@
+[Unit]
+Description=RakuOS System Setup
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/rakuos/system-setup boot
+RemainAfterExit=false
+
+[Install]
+WantedBy=multi-user.target
