@@ -129,13 +129,7 @@ modules:
   # Enable RakuOS overlay services
   - type: script
     scripts:
-      - |
-        #!/bin/sh
-        systemctl enable rakuos-overlay-mount.service
-        systemctl enable rakuos-overlay-sync.service
-        systemctl enable rakuos-overlay-services.service
-        systemctl enable rakuos-base-protect.service
-        systemctl enable --global rakuos-user.service
+      - enable-rakuos-services.sh
 
   # Set up the proper policy & signing files for signed images to work fully
   - type: signing
