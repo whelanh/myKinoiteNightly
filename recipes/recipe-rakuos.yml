@@ -119,20 +119,7 @@ modules:
 
   # === RakuOS Overlay System Additions ===
   # Create protected packages template (customize this based on your base image)
-  - type: script
-    scripts:
-      - mkdir -p /usr/share/rakuos
-      - |
-        cat > /usr/share/rakuos/protected-packages.txt << 'EOF'
-        # Add your protected packages here - these are packages from the base image
-        # that should not be overridden by the overlay
-        # For Kinoite/Cosmic Desktop, typically includes:
-        cosmic-session
-        cosmic-panel
-        cosmic-applets
-        # Add other core system packages as needed based on your base image
-        # You can examine a running Kinoite system to see what to protect
-        EOF
+  # Handled by copying files/system/usr/share/rakuos/protected-packages.txt via the files module
 
   # Generate RakuOS base manifests and configuration
   - type: script
