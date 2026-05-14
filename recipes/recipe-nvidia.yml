@@ -55,11 +55,11 @@ modules:
         - fprintd
         - fprintd-pam
         - cosmic-desktop
-        - R
-        - libcurl-devel
-        - libuv-devel
-        - libxml2-devel
-        - fribidi-devel
+        #- R
+        #- libcurl-devel
+        #- libuv-devel
+        #- libxml2-devel
+        #- fribidi-devel
         - pandoc
         - tcl-devel
         - tk-devel
@@ -105,9 +105,9 @@ modules:
         - xwaylandvideobridge
         #- firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
 
-  - type: script
-    scripts:
-      - install-rstudio.sh
+  #- type: script
+  #  scripts:
+  #    - install-rstudio.sh
 
   - type: files
     files:
