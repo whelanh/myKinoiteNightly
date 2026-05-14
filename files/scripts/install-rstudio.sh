@@ -3,7 +3,7 @@ set -ouex pipefail
 
 # Get the latest RStudio daily build URL for RHEL9 x86_64
 RSTUDIO_URL=$(curl -fsSL "https://dailies.rstudio.com/rstudio/latest/index.json" | \
-  python3 -c "import sys,json; d=json.load(sys.stdin); print(d['products']['electron']['platforms']['rhel9-x86_64']['link'])")
+  python3 -c "import sys,json; d=json.load(sys.stdin); print(d['products']['electron']['platforms']['rhel10-x86_64']['link'])")
 
 # Download RStudio daily build
 curl -fL -o /tmp/rstudio.rpm "$RSTUDIO_URL"
