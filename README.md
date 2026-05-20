@@ -6,7 +6,11 @@
 <sub>See the [BlueBuild docs](https://blue-build.org/how-to/setup/) for quick setup instructions for setting up your own repository based on this template.</sub>
 
 ## 💽 My Custom Image
-![Custom](https://img.shields.io/badge/Custom-0066cc?style=flat)*[@1/16/2026 -- I've temporarily changed the base image I use in my recipe-nvidia.yml to Kinoite:rawhide because Kinoite-Nightly Rawhide hasn't been updated for awhile. To check status see: [https://quay.io/repository/fedora-ostree-desktops/kinoite-nightly?tab=tags](https://gitlab.com/fedora/ostree/ci-test/-/pipelines)*
+![Custom](https://img.shields.io/badge/Custom-0066cc?style=flat)
+
+## 5/20/2026: While I will continue to run this build process daily for awhile, it's goal of coupling KDE git with Rawhide isn't possible using the daily Kinoite images (due to solopasha KDE COPR repos are no longer being updated).  So you should now go to https://github.com/whelanh/fedora-kde-git if that is what you want.  This repo is now just producing a daily Kinoite Rawhide image with various customizations.
+
+*[@1/16/2026 -- I've temporarily changed the base image I use in my recipe-nvidia.yml to Kinoite:rawhide because Kinoite-Nightly Rawhide hasn't been updated for awhile. To check status see: [https://quay.io/repository/fedora-ostree-desktops/kinoite-nightly?tab=tags](https://gitlab.com/fedora/ostree/ci-test/-/pipelines)*
 
 This repository builds a custom **Fedora Kinoite image based on the nightly rawhide build**:
 
