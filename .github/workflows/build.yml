@@ -31,15 +31,23 @@ jobs:
           #- recipe-rakuos.yml
           #- recipe-amd.yml
           #- recipe-asus.yml
+
     steps:
-      # the build is fully handled by the reusable github action
-      - name: Build Custom Image
+      - name: Build Custom Image (PR)
+        if: github.event_name == 'pull_request'
+        uses: blue-build/github-action@v1.11
+        with:
+          recipe: ${{ matrix.recipe }}
+          registry_token: ${{ github.token }}
+          pr_event_number: ${{ github.event.number }}
+          maximize_build_space: true
+
+      - name: Build Custom Image (signed)
+        if: github.event_name != 'pull_request'
         uses: blue-build/github-action@v1.11
         with:
           recipe: ${{ matrix.recipe }}
           cosign_private_key: ${{ secrets.SIGNING_SECRET }}
           registry_token: ${{ github.token }}
-          pr_event_number: ${{ github.event.number }}
-
-          # enabled by default, disable if your image is small and you want faster builds
           maximize_build_space: true
+    
