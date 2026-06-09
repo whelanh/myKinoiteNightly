@@ -52,6 +52,7 @@ modules:
         - cmake
         - git
         - fuse
+        - fuse-libs
         - fprintd
         - fprintd-pam
         - cosmic-desktop
