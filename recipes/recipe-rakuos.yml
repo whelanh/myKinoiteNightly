@@ -24,9 +24,6 @@ modules:
       - mesa-dri-drivers
       - libdrm
 
-  - type: script
-    scripts:
-      - add-antigravity-repo.sh
 
   - type: dnf
     repos:
@@ -42,7 +39,6 @@ modules:
       packages:
         - rakuos-welcome
         - rakuos-software
-        - antigravity
         - dnf-plugins-core # needed for cop r
         - zsh
         - gcc

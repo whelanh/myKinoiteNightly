@@ -24,10 +24,7 @@ modules:
       - mesa-dri-drivers
       - libdrm
 
-  - type: script
-    scripts:
-      - add-antigravity-repo.sh
-    
+
   - type: dnf
     repos:
       copr:
@@ -38,7 +35,6 @@ modules:
         - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
     install:
       packages:
-        - antigravity
         - dnf-plugins-core # needed for copr
         - zsh
         - gcc
