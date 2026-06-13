@@ -57,6 +57,7 @@ modules:
         - pandoc
         - tcl-devel
         - tk-devel
+        - qt6-qtbase-devel
         - python-pyqt6
         - python-pyqt6-webengine
         - edk2-ovmf
