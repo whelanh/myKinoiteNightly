@@ -62,6 +62,10 @@ modules:
         - python-pyqt6-webengine
         - python3-pandas
         - python3-requests
+        - python3-pip
+        - python3-suds
+        - python3-colorama
+        - python3-reportlab
         - edk2-ovmf
         - libvirt
         - libvirt-nss
