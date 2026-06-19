@@ -30,7 +30,7 @@ jobs:
           - recipe-nvidia.yml
           #- recipe-rakuos.yml
           #- recipe-amd.yml
-          #- recipe-asus.yml
+          - recipe-asus.yml
 
     steps:
       - name: Build Custom Image (PR)
