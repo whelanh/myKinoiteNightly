@@ -57,6 +57,8 @@ modules:
         - pandoc
         - tcl-devel
         - tk-devel
+        - plasma-oxygen
+        - oxygen-icon-theme
         - qt6-qtbase-devel
         - python-pyqt6
         - python-pyqt6-webengine
