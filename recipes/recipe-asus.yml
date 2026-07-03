@@ -55,6 +55,8 @@ modules:
         - fprintd-pam
         #- cosmic-desktop
         - pandoc
+        - plasma-oxygen
+        - oxygen-icon-theme
         - tcl-devel
         - tk-devel
         - qt6-qtbase-devel
