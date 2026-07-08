@@ -8,19 +8,34 @@
 ## 💽 My Custom Image
 ![Custom](https://img.shields.io/badge/Custom-0066cc?style=flat)
 
-## 5/20/2026: The goal of coupling KDE git with Rawhide isn't possible using the daily Kinoite images (becasue the solopasha KDE COPR repos are no longer being updated).  So you should now go to https://github.com/whelanh/fedora-kde-git if that is what you want.  This repo is now just producing a daily Kinoite Rawhide image with various customizations.
+This repository produces **two** custom Fedora Kinoite images, both built on top of the Fedora Kinoite nightly Rawhide image (`quay.io/fedora-ostree-desktops/kinoite:rawhide`):
 
-*[@1/16/2026 -- I've temporarily changed the base image I use in my recipe-nvidia.yml to Kinoite:rawhide because Kinoite-Nightly Rawhide hasn't been updated for awhile. To check status see: [https://quay.io/repository/fedora-ostree-desktops/kinoite-nightly?tab=tags](https://gitlab.com/fedora/ostree/ci-test/-/pipelines)*
+1. **`ghcr.io/whelanh/kinoite-nightly-ublue`** — the Kinoite nightly Rawhide image with the Universal Blue features, NVIDIA/nouveau drivers, and custom packages specified in [`recipes/recipe-nvidia.yml`](https://github.com/whelanh/myKinoiteNightly/blob/main/recipes/recipe-nvidia.yml).
 
-This repository builds a custom **Fedora Kinoite image based on the nightly rawhide build**:
+2. **`ghcr.io/whelanh/kinoite-rawhide-canary`** — starts from the *same* Kinoite nightly Rawhide image, but substitutes approximately **177 KDE Plasma and Gear packages built from the KDE development Git**. That KDE-git base is produced by my separate [fedora-kde-git](https://github.com/whelanh/fedora-kde-git) repository and published as `ghcr.io/whelanh/fedora-kde-git`; the customizations in [`recipes/recipe-asus.yml`](https://github.com/whelanh/myKinoiteNightly/blob/main/recipes/recipe-asus.yml) are then applied on top of it.
 
-   
-      Image base:    quay.io/fedora-ostree-desktops/kinoite-nightly:rawhide
+> [!NOTE]
+> These are the **only two images** currently produced by this repository. Other variants exist in the [`recipes/`](https://github.com/whelanh/myKinoiteNightly/tree/main/recipes) directory, but they are not actively built. The Cosmic Desktop recipe is currently commented out, though it could be re-added if you wish to create your own fork.
+
+### 🔀 Build flow
+
+```mermaid
+flowchart TD
+    A["quay.io/fedora-ostree-desktops/kinoite:rawhide<br/>Fedora Kinoite nightly Rawhide"]
+
+    A --> B["recipe-nvidia.yml<br/>Universal Blue + NVIDIA/nouveau + custom packages"]
+    B --> C["ghcr.io/whelanh/kinoite-nightly-ublue:latest"]
+
+    A --> D["fedora-kde-git repo<br/>substitute ~177 KDE Plasma and Gear packages<br/>built from KDE development Git"]
+    D --> E["ghcr.io/whelanh/fedora-kde-git"]
+    E --> F["recipe-asus.yml<br/>Universal Blue + custom packages"]
+    F --> G["ghcr.io/whelanh/kinoite-rawhide-canary:latest"]
+```
 
 
 ## ⏭️ Changes
 
-The nightly Kinoite build images use the COPR solopasha git repos for the latest in-development KDE and KDE-gear packages. *See https://tim.siosm.fr/blog/2023/01/20/introducing-kinoite-nightly-beta/ for further details.* A number of Universal Blue packages are included in order to provide some of the features of a UBlue "dx" experience.  See [/recipes/recipe-nvidia.yml](https://github.com/whelanh/myKinoiteNightly/blob/main/recipes/recipe-nvidia.yml) file for details on what I've added.
+Both images layer a number of Universal Blue packages on top of the Kinoite Rawhide base in order to provide some of the features of a UBlue "dx" experience. The `kinoite-rawhide-canary` image additionally swaps in the latest in-development KDE Plasma and Gear packages built from the KDE development Git (via the [fedora-kde-git](https://github.com/whelanh/fedora-kde-git) repository). See [/recipes/recipe-nvidia.yml](https://github.com/whelanh/myKinoiteNightly/blob/main/recipes/recipe-nvidia.yml) and [/recipes/recipe-asus.yml](https://github.com/whelanh/myKinoiteNightly/blob/main/recipes/recipe-asus.yml) for details on what I've added.
 
 Some custom ujust 'recipes' are provided to install homebrew, Universal Blue's Aurora brew bundle, and a curated list of flatpaks if desired.  See [/files/system/usr/share/ublue-os/just/60-custom.just](https://github.com/whelanh/myKinoiteNightly/blob/main/files/system/usr/share/ublue-os/just/60-custom.just) for the list of flatpaks. Also, if interested in Nix, automated ujust commands are available to simplify the installation process (see below for more details).
 
@@ -50,14 +65,19 @@ This image includes a set of packages that should detect your NVIDIA GPU and use
 - `libdrm` 
 
 ### Cosmic DE
-For those interested in the Cosmic desktop as an alternative login option, I've also added ryanbex/cosmic-epoch COPR repo and `cosmic-desktop` to the installed package list.  If you want a pure Cosmic rawhide image, this project also builds a `ghcr.io/whelanh/cosmic-latest-ublue:latest` image which you can rebase to instead.  It also has all of the custom ujust recipes and added packages of the kinoite-nightly image. See [/recipes/recipe-cosmic.yml](https://github.com/whelanh/myKinoiteNightly/blob/main/recipes/recipe-cosmic.yml)
+The Cosmic desktop packages (the `ryanabx/cosmic-epoch` COPR repo and `cosmic-desktop`) are **currently commented out** in both recipes, so Cosmic is not installed in the images produced today. If you would like a Cosmic login option, you can uncomment those lines in your own fork. This project also includes a [/recipes/recipe-cosmic.yml](https://github.com/whelanh/myKinoiteNightly/blob/main/recipes/recipe-cosmic.yml) that (when built) produces a `ghcr.io/whelanh/cosmic-latest-ublue:latest` image with all of the custom ujust recipes and added packages of the kinoite-nightly image.
 
 ## 🛠️ Installation
 
 > [!WARNING]  
 > [This is an experimental feature](https://www.fedoraproject.org/wiki/Changes/OstreeNativeContainerStable), try at your own discretion.
 
-To rebase an existing atomic Fedora installation to the latest build:
+To rebase an existing atomic Fedora installation to the latest build, first pick which of the two images you want:
+
+- **`ghcr.io/whelanh/kinoite-nightly-ublue`** — Kinoite nightly Rawhide + Universal Blue + NVIDIA/nouveau (from `recipe-nvidia.yml`)
+- **`ghcr.io/whelanh/kinoite-rawhide-canary`** — the KDE-git build (Plasma & Gear from Git) + Universal Blue (from `recipe-asus.yml`)
+
+The commands below use `kinoite-nightly-ublue`; **substitute `kinoite-rawhide-canary`** in every command if you want the KDE-git image instead.
 
 - First rebase to the unsigned image, to get the proper signing keys and policies installed:
   ```
@@ -78,7 +98,7 @@ To rebase an existing atomic Fedora installation to the latest build:
   systemctl reboot
   ```
 
-The `latest` tag will automatically point to the latest build. That build will still always use the Fedora version specified in `recipe.yml` (which is the nightly kinoite:rawhide image).
+The `latest` tag will automatically point to the latest build. Both images are built on the nightly `kinoite:rawhide` base image.
 
 ## Nix Install
 
@@ -155,7 +175,7 @@ If build on Fedora Atomic, you can generate an offline ISO with the instructions
 
 ## Verification
 
-These images are signed with [Sigstore](https://www.sigstore.dev/)'s [cosign](https://github.com/sigstore/cosign). You can verify the signature by downloading the `cosign.pub` file from this repo and running the following command:
+These images are signed with [Sigstore](https://www.sigstore.dev/)'s [cosign](https://github.com/sigstore/cosign). You can verify the signature by downloading the `cosign.pub` file from this repo and running the following command (substitute `kinoite-rawhide-canary` for the KDE-git image):
 
 ```bash
 cosign verify --key cosign.pub ghcr.io/whelanh/kinoite-nightly-ublue:latest
@@ -163,4 +183,4 @@ cosign verify --key cosign.pub ghcr.io/whelanh/kinoite-nightly-ublue:latest
 
 ## 🙏 Gratitude
 
-I sincerely appreciate all of the hard work by **BlueBuild**, **Fedora**, **Universal Blue** and solopasha for providing COPR KDE Git repos that make this image possible. In particular, I thank **Universal Blue** for their packages available on the COPR repository.
+I sincerely appreciate all of the hard work by **BlueBuild**, **Fedora**, **Universal Blue** and @silverhadch for providing the method to build the KDE Git packages. In particular, I thank **Universal Blue** for their packages available on the COPR repository.
