@@ -8,7 +8,7 @@
 ## 💽 My Custom Image
 ![Custom](https://img.shields.io/badge/Custom-0066cc?style=flat)
 
-This repository produces **two** custom Fedora Kinoite images, both built on top of the Fedora Kinoite nightly Rawhide image (`quay.io/fedora-ostree-desktops/kinoite:rawhide`):
+This repository produces **two** custom Fedora Kinoite images, both built on top of the Fedora Kinoite [nightly Rawhide image](https://gitlab.com/fedora/ostree/ci-test/-/pipelines):
 
 1. **`ghcr.io/whelanh/kinoite-nightly-ublue`** — the Kinoite nightly Rawhide image with the Universal Blue features, NVIDIA/nouveau drivers, and custom packages specified in [`recipes/recipe-nvidia.yml`](https://github.com/whelanh/myKinoiteNightly/blob/main/recipes/recipe-nvidia.yml).
 
