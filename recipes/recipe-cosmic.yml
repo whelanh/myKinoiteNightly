@@ -12,9 +12,9 @@ image-version: rawhide # latest is also supported if you want new updates ASAP
 # you can include multiple instances of the same module
 modules:
   # Disable the fedora-cisco-openh264 repo (causes build failures, not needed with Flatpak Firefox)
-  - type: script
-    scripts:
-      - disable-openh264-repo.sh
+  #- type: script
+  #  scripts:
+  #    - disable-openh264-repo.sh
 
   - type: rpm-ostree
     install:
@@ -37,6 +37,8 @@ modules:
       packages:
         - dnf-plugins-core # needed for copr
         - zsh
+        - zsh-autosuggestions
+        - zsh-syntax-highlighting
         - gcc
         - gcc-c++
         - gcc-gfortran
@@ -47,19 +49,26 @@ modules:
         - cmake
         - git
         - fuse
+        - fuse-libs
         - fprintd
         - fprintd-pam
-        - R
+        - pandoc
         - libcurl-devel
         - libuv-devel
         - tcl-devel
         - tk-devel
+        - qt6-qtbase-devel
         - python-pyqt6
         - python-pyqt6-webengine
+        - python3-pandas
+        - python3-requests
+        - python3-pip
+        - python3-suds
+        - python3-colorama
+        - python3-reportlab
         - edk2-ovmf
         - libvirt
         - libvirt-nss
-        - onedrive
         - PackageKit
         - docker
         - distrobox
@@ -95,9 +104,9 @@ modules:
         - firefox
         #- firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
 
-  - type: script
-    scripts:
-      - install-rstudio.sh
+  #- type: script
+  #  scripts:
+  #    - install-rstudio.sh
 
   - type: files
     files:
