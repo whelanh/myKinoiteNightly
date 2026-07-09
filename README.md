@@ -65,7 +65,7 @@ This image includes a set of packages that should detect your NVIDIA GPU and use
 - `libdrm` 
 
 ### Cosmic DE
-The Cosmic desktop packages (the `ryanabx/cosmic-epoch` COPR repo and `cosmic-desktop`) are **currently commented out** in both recipes, so Cosmic is not installed in the images produced today. If you would like a Cosmic login option, you can uncomment those lines in your own fork. This project also includes a [/recipes/recipe-cosmic.yml](https://github.com/whelanh/myKinoiteNightly/blob/main/recipes/recipe-cosmic.yml) that (when built) produces a `ghcr.io/whelanh/cosmic-latest-ublue:latest` image with all of the custom ujust recipes and added packages of the kinoite-nightly image.
+The Cosmic desktop packages (the `ryanabx/cosmic-epoch` COPR repo and `cosmic-desktop`) are **currently commented out** in both recipes, so Cosmic is not installed in the images produced today. If you would like a Cosmic login option, you can uncomment those lines in your own fork. This project also includes a [/recipes/recipe-cosmic.yml](https://github.com/whelanh/myKinoiteNightly/blob/main/recipes/recipe-cosmic.yml) that (when built) produces a `ghcr.io/whelanh/cosmic-latest-ublue:latest` image based on Fedora's nightly Cosmic image base with all of the custom ujust recipes and added packages of the kinoite-nightly image.
 
 ## 🛠️ Installation
 
